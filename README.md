@@ -1,1 +1,1 @@
-# wpproconapp
+# プロコン2015用WindowsPhoneアプリケーション
