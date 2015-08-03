@@ -1,0 +1,70 @@
+﻿<prism:VisualStateAwarePage
+    x:Class="ProconApp.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ProconApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="using:Microsoft.Practices.Prism.StoreApps"
+    xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
+    mc:Ignorable="d"   
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <prism:VisualStateAwarePage.BottomAppBar>
+        <CommandBar Height="17">
+            <AppBarButton Icon="Setting" Label="設定"/>
+        </CommandBar>
+    </prism:VisualStateAwarePage.BottomAppBar>
+
+    <Grid>
+        <Pivot Title="プロコン2015" Margin="0,0,0,27">
+            <PivotItem Header="ホーム" Margin="19,23,19,0.833">
+                <Grid>
+                <StackPanel HorizontalAlignment="Left" Height="153" Margin="10,10,0,0" VerticalAlignment="Top" Width="342">
+                        <TextBlock Text="お知らせ" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
+                        <ListView   Margin="0,0,0,30"
+                                    Height="120"
+                                    ItemsSource="{Binding NoticeItemList}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="20" Margin="0" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontSize="18" Text="{Binding Date}"/>
+                                        <TextBlock Grid.Column="1" FontSize="18" Text="{Binding Title}"/>
+                                        
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" Height="153" Margin="10,200,0,0" VerticalAlignment="Top" Width="342">
+                        <TextBlock Text="競技結果速報" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
+                        <ListView    Margin="0,0,0,30"
+                                    Height="120"
+                                    ItemsSource="{Binding ResultItemList}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="20" Margin="0" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0"  FontSize="18" Text="{Binding Date}"/>
+                                        <TextBlock Grid.Column="1" FontSize="18" Text="{Binding Title}"/>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="ソーシャル">
+                <Grid/>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</prism:VisualStateAwarePage>

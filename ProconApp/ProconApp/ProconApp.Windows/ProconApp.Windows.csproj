@@ -144,14 +144,17 @@
     <Reference Include="Microsoft.Practices.Prism.StoreApps.Windows">
       <HintPath>..\..\packages\Prism.StoreApps.2.0.0\lib\windows8\Microsoft.Practices.Prism.StoreApps.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ReactiveProperty">
-      <HintPath>..\..\packages\ReactiveProperty.2.2.1\lib\win81\ReactiveProperty.dll</HintPath>
+      <HintPath>..\..\packages\ReactiveProperty.2.2.2\lib\win81\ReactiveProperty.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveProperty.DataAnnotations">
-      <HintPath>..\..\packages\ReactiveProperty.2.2.1\lib\win81\ReactiveProperty.DataAnnotations.dll</HintPath>
+      <HintPath>..\..\packages\ReactiveProperty.2.2.2\lib\win81\ReactiveProperty.DataAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveProperty.WinRT">
-      <HintPath>..\..\packages\ReactiveProperty.2.2.1\lib\win81\ReactiveProperty.WinRT.dll</HintPath>
+      <HintPath>..\..\packages\ReactiveProperty.2.2.2\lib\win81\ReactiveProperty.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\..\packages\Rx-Core.2.2.5\lib\windows8\System.Reactive.Core.dll</HintPath>

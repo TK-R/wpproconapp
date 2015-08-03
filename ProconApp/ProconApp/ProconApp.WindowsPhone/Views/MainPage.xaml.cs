@@ -1,6 +1,8 @@
-﻿using Microsoft.Practices.Prism.StoreApps;
+﻿using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.StoreApps;
 
-namespace Procon.Views
+
+namespace ProconApp.Views
 {
     /// <summary>
     /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
@@ -10,7 +12,7 @@ namespace Procon.Views
         public MainPage()
         {
             this.InitializeComponent();
+            ViewModelLocator.SetAutoWireViewModel(this, true);
         }
-
     }
 }
