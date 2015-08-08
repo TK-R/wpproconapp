@@ -11,7 +11,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <prism:VisualStateAwarePage.BottomAppBar>
         <CommandBar Height="17">
-            <AppBarButton Icon="Setting" Label="設定"/>
+            <AppBarButton Icon="Setting" Command="{Binding SettingCommand}" Label="設定"/>
         </CommandBar>
     </prism:VisualStateAwarePage.BottomAppBar>
 

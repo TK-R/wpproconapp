@@ -16,7 +16,6 @@ namespace ProconAPI
         /// </summary>
         private static string APIDomainDev = "https://proconapp-dev.azure-mobile.net/api";
 
-
         /// <summary>
         /// 新規ユーザー登録用
         /// </summary>
@@ -54,8 +53,7 @@ namespace ProconAPI
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
             try
-            {
-                
+            {                
                 var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/user/me/info"));
                 return await res.Content.ReadAsStringAsync();
             }
