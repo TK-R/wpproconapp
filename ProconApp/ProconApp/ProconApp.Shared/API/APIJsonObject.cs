@@ -29,7 +29,7 @@ namespace ProconAPI
     {
         public int id { get; set; }
         public string title { get; set; }
-        public string published_at { get; set; }
+        public int published_at { get; set; }
         public int body_size { get; set; }
 
         public override string ToString()

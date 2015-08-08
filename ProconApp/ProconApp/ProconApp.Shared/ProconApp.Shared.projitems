@@ -17,5 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\DateTimeHelper.cs" />
   </ItemGroup>
 </Project>

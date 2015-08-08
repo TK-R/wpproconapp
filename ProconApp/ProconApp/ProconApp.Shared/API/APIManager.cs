@@ -16,10 +16,6 @@ namespace ProconAPI
         /// </summary>
         private static string APIDomainDev = "https://proconapp-dev.azure-mobile.net/api";
 
-        /// <summary>
-        /// 使用するユーザートークン
-        /// </summary>
-        private string userToken;
 
         /// <summary>
         /// 新規ユーザー登録用
