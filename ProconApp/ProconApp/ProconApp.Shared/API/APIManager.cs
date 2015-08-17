@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Net.Http.Headers;
 
 namespace ProconAPI
 {
@@ -188,5 +189,70 @@ namespace ProconAPI
             }
         }
 
+
+        /// <summary>
+        /// 通知を行う学校を登録
+        /// </summary>
+        /// <param name="userToken">ユーザートークン</param>
+        /// <param name="ids">競技結果を取得する学校のID</param>
+        /// <returns>実行結果</returns>
+        public async Task<string> GameNotificationSet(string userToken, int[] ids)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var jsonText = JsonConvert.SerializeObject(new GameNotificationSetIDs { ids = new int[]{1}});
+            var content = new ByteArrayContent(Encoding.UTF8.GetBytes(jsonText));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json"); 
+    
+            try
+            {
+                var res = await httpClient.PutAsync(new Uri(APIDomainDev + "/user/me/game_notification"), content);
+                return await res.Content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException he)
+            {
+                Debug.WriteLine(he.ToString());
+                return null;
+            }
+            catch (Exception e)
+            {
+                // For debugging
+                Debug.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
+        public async Task<string> PushDeviceSet(string userToken, string uri)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var jsonText = JsonConvert.SerializeObject(
+                new DeviceTokenObject { device_type = "wp", device_token = uri});
+            var content = new ByteArrayContent(Encoding.UTF8.GetBytes(jsonText));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            try
+            {
+                var res = await httpClient.PutAsync(new Uri(APIDomainDev + "/user/me/push_token"), content);
+                return await res.Content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException he)
+            {
+                Debug.WriteLine(he.ToString());
+                return null;
+            }
+            catch (Exception e)
+            {
+                // For debugging
+                Debug.WriteLine(e.ToString());
+                return null;
+
+            }
+
+        }
     }
 }

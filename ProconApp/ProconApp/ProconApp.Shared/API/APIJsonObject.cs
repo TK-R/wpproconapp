@@ -93,6 +93,17 @@ namespace ProconAPI
             return "ID:" + id + " Name:" + name + " Short Name:" + short_name;
         }
     }
+
+    public class GameNotificationSetIDs
+    {
+        public int[] ids { get; set; }
+    }
+
+    public class DeviceTokenObject
+    {
+        public string device_type { get; set; }
+        public string device_token { get; set; }
+    }
 }
 
 
