@@ -123,7 +123,7 @@ namespace ProconApp.ViewModels
         /// </summary>
         private void SettingExecute()
         {
-            this.navigationService.Navigate("Setting", null);
+            this.navigationService.Navigate("NotifyConfig", null);
         }
     }
 

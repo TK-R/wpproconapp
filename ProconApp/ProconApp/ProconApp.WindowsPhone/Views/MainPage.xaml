@@ -17,10 +17,10 @@
 
     <Grid>
         <Pivot Title="プロコン2015" Margin="0,0,0,27">
-            <PivotItem Header="ホーム" Margin="19,23,19,0.833">
+            <PivotItem Header="ホーム" Margin="19,0,19,0.667">
                 <Grid>
                     <StackPanel HorizontalAlignment="Left" Height="153" Margin="10,10,0,0" VerticalAlignment="Top" Width="342">
-                        <TextBlock Text="お知らせ" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
+                        <TextBlock Text="お知らせ" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
                         <ListView   Margin="0,0,-0.333,30"
                                     Height="120"
                                     ItemsSource="{Binding NoticeItemList}">
@@ -40,7 +40,7 @@
                         </ListView>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Left" Height="170" Margin="10,200,0,0" VerticalAlignment="Top" Width="342">
-                        <TextBlock Text="競技結果速報" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
+                        <TextBlock Text="競技結果速報" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
                         <ListView    Margin="0,0,-0.333,30"
                                     Height="132"
                                     ItemsSource="{Binding ResultItemList}">

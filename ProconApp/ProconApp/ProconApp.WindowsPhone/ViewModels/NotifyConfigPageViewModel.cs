@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.Mvvm.Interfaces;
 using Newtonsoft.Json;
 using ProconAPI;
 using System;
@@ -16,8 +17,7 @@ namespace ProconApp.ViewModels
     /// </summary>
     public class NotifyConfigPageViewModel : ViewModel
     {
-        private ObservableCollection<NotifyConfigItem> notifyConfigItemList;
-        
+        private ObservableCollection<NotifyConfigItem> notifyConfigItemList = new ObservableCollection<NotifyConfigItem>();
         /// <summary>
         /// 通知設定用の出場校一覧リスト
         /// </summary>
@@ -26,7 +26,6 @@ namespace ProconApp.ViewModels
             get { return notifyConfigItemList; }
             set { this.SetProperty(ref notifyConfigItemList, value); }
         }
-
 
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
