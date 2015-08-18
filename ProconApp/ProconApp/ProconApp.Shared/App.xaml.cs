@@ -59,11 +59,14 @@ namespace ProconApp
             if (uri != null)
                 return;
 
+            // リソースファイルから通知ハブに関するパラメータを取得
             var resLoader = ResourceLoader.GetForCurrentView("Resources");
-            string endppoint = resLoader.GetString("endpoint");
+            var endppoint = resLoader.GetString("endpoint");
+            var hubname = resLoader.GetString("hubname");
 
             var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-            var hub = new NotificationHub("proconapp-dev", endppoint);
+            var hub = new NotificationHub(hubname, endppoint);
+
             var result = await hub.RegisterNativeAsync(channel.Uri);
 
             Debug.WriteLine(channel.Uri.ToString());

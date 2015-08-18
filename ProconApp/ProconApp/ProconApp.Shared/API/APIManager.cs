@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Net.Http.Headers;
 using Windows.Storage;
+using Windows.ApplicationModel.Resources;
 
 namespace ProconAPI
 {
@@ -17,7 +18,7 @@ namespace ProconAPI
         /// <summary>
         /// プロコンAPIサーバーのURL
         /// </summary>
-        private static string APIDomainDev = "https://proconapp-dev.azure-mobile.net/api";
+        private static string APIDomainDev;
 
         /// <summary>
         /// Manager内で共通で使用するユーザートークン
@@ -31,6 +32,9 @@ namespace ProconAPI
         /// <returns></returns>
         public static async Task Initialize()
         {
+            var resLoader = ResourceLoader.GetForCurrentView("Resources");
+            APIDomainDev = resLoader.GetString("domain");
+
             var tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
             if (tkn != null)
             {
