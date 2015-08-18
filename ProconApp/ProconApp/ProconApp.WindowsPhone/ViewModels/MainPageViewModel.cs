@@ -68,30 +68,11 @@ namespace ProconApp.ViewModels
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
 
-            var api = new APIManager();
-
-            /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
-            string tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
-
+            // 速報と競技結果を取得
             try
             {
-                /* トークンがnullなら取得処理を実行 */
-                if (tkn == null)
-                {
-                    tkn = JsonConvert.DeserializeObject<NewUserResponseJson>(await api.NewUser()).user_token;
-                    ApplicationData.Current.RoamingSettings.Values["Token"] = tkn;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-
-            /* 速報と競技結果を取得 */
-            try
-            {
-                var notice = JsonConvert.DeserializeObject<List<NoticeListObject>>(await api.NoticeList(tkn, 0));
-                var result = JsonConvert.DeserializeObject<List<GameResultObject>>(await api.GameResult(tkn, 3));
+                var notice = JsonConvert.DeserializeObject<List<NoticeListObject>>(await APIManager.NoticeList(0));
+                var result = JsonConvert.DeserializeObject<List<GameResultObject>>(await APIManager.GameResult(3));
 
                 foreach (var n in notice)
                     NoticeItemList.Add(new SummaryItem {

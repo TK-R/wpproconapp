@@ -8,10 +8,11 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Net.Http.Headers;
+using Windows.Storage;
 
 namespace ProconAPI
 {
-    public class APIManager
+    public static class APIManager
     {
         /// <summary>
         /// プロコンAPIサーバーのURL
@@ -19,41 +20,53 @@ namespace ProconAPI
         private static string APIDomainDev = "https://proconapp-dev.azure-mobile.net/api";
 
         /// <summary>
-        /// 新規ユーザー登録用
+        /// Manager内で共通で使用するユーザートークン
         /// </summary>
-        /// <returns>登録したUUID</returns>
-        public async Task<string> NewUser()
-        {
-            /* HTTPクライアント */
-            var httpClient = new HttpClient();
+        public static string UserToken;
 
+
+        /// <summary>
+        /// API管理クラスの初期化処理
+        /// </summary>
+        /// <returns></returns>
+        public static async Task Initialize()
+        {
+            var tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
+            if (tkn != null)
+            {
+                UserToken = tkn;
+                return;
+            }
+
+            var httpClient = new HttpClient();
+         
             try
             {
                 var res = await httpClient.PostAsync(new Uri(APIDomainDev + "/auth/new_user"), null);
-                return await res.Content.ReadAsStringAsync();
+                UserToken = JsonConvert.DeserializeObject<NewUserResponseJson>(await res.Content.ReadAsStringAsync()).user_token;
+                ApplicationData.Current.RoamingSettings.Values["Token"] = UserToken;
             }
             catch (HttpRequestException he)
             {
                 Debug.WriteLine(he.ToString());
-                return null;
+                return ;
             }
             catch (Exception e)
             {
                 // For debugging
                 Debug.WriteLine(e.ToString());
-                return null;
+                return;
             }
         }
 
         /// <summary>
         /// ユーザー情報取得メソッド
         /// </summary>
-        /// <param name="userToken">取得済みのユーザートークン</param>
         /// <returns></returns>
-        public async Task<string> UserInfo(string userToken)
+        public static async Task<string> UserInfo()
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
             try
             {                
                 var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/user/me/info"));
@@ -75,13 +88,12 @@ namespace ProconAPI
         /// <summary>
         /// お知らせ一覧取得
         /// </summary>
-        /// <param name="userToken">ユーザートークン</param>
         /// <param name="page">リクエストするページNo.</param>
         /// <returns>お知らせ一覧の文字列データ</returns>
-        public async Task<string> NoticeList(string userToken, int page)
+        public static async Task<string> NoticeList(int page)
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
 
             try
             {
@@ -104,13 +116,12 @@ namespace ProconAPI
         /// <summary>
         /// お知らせ本文取得
         /// </summary>
-        /// <param name="userToken">ユーザートークン</param>
         /// <param name="itemID">リクエストするアイテムID</param>
         /// <returns>お知らせ本文の文字列</returns>
-        public async Task<string> NoticeItem(string userToken, int itemID)
+        public static async Task<string> NoticeItem(int itemID)
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
 
             try
             {
@@ -133,12 +144,11 @@ namespace ProconAPI
         /// <summary>
         /// 出場校リスト取得
         /// </summary>
-        /// <param name="userToken">ユーザートークン</param>
         /// <returns>出場校リストの文字列</returns>
-        public async Task<string> Players(string userToken)
+        public static async Task<string> Players()
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
 
             try
             {
@@ -163,13 +173,12 @@ namespace ProconAPI
         /// <summary>
         /// 競技結果取得
         /// </summary>
-        /// <param name="userToken">ユーザートークン</param>
         /// <param name="count">競技結果取得件数</param>
         /// <returns>競技結果文字列</returns>
-        public async Task<string> GameResult(string userToken, int count)
+        public static async Task<string> GameResult(int count)
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
 
             try
             {
@@ -193,13 +202,12 @@ namespace ProconAPI
         /// <summary>
         /// 通知を行う学校を登録
         /// </summary>
-        /// <param name="userToken">ユーザートークン</param>
         /// <param name="IDs">競技結果を取得する学校のID</param>
         /// <returns>実行結果</returns>
-        public async Task<string> GameNotificationSet(string userToken, int[] IDs)
+        public static async Task<string> GameNotificationSet(int[] IDs)
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             var jsonText = JsonConvert.SerializeObject(new GameNotificationIDs { ids = IDs});
@@ -227,12 +235,11 @@ namespace ProconAPI
         /// <summary>
         /// 通知を行う学校のリストを取得
         /// </summary>
-        /// <param name="userToken"></param>
         /// <returns></returns>
-        public async Task<string> GameNotificationGet(string userToken)
+        public static async Task<string> GameNotificationGet()
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
 
             try
             {
@@ -256,13 +263,12 @@ namespace ProconAPI
         /// プッシュデバイス登録メソッド
         /// アプリケーションごとに一回だけコールすること
         /// </summary>
-        /// <param name="userToken">ユーザートークン</param>
         /// <param name="uri">通知ハブから取得したUri</param>
         /// <returns>結果</returns>
-        public async Task<string> PushDeviceSet(string userToken, string uri)
+        public static async Task<string> PushDeviceSet(string uri)
         {
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", userToken);
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             // シリアライズしたオブジェクトをバイト形式のcontentに変換
@@ -289,7 +295,5 @@ namespace ProconAPI
                 return null;
             }
         }
-
-
     }
 }

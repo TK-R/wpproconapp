@@ -34,32 +34,14 @@ namespace ProconApp.ViewModels
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
 
             // APIを用いて出場校一覧を取得
-            var api = new APIManager();
-
-            /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
-            string tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
-
-            try
-            {
-                /* トークンがnullなら取得処理を実行 */
-                if (tkn == null)
-                {
-                    tkn = JsonConvert.DeserializeObject<NewUserResponseJson>(await api.NewUser()).user_token;
-                    ApplicationData.Current.RoamingSettings.Values["Token"] = tkn;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
 
             try
             {
                 // 出場校一覧を取得
-                var players = JsonConvert.DeserializeObject<List<PlayerObject>>(await api.Players(tkn));
+                var players = JsonConvert.DeserializeObject<List<PlayerObject>>(await APIManager.Players());
 
                 // サーバ側の通知登録リストを取得
-                var notifyList = JsonConvert.DeserializeObject<GameNotificationIDs>(await api.GameNotificationGet(tkn));
+                var notifyList = JsonConvert.DeserializeObject<GameNotificationIDs>(await APIManager.GameNotificationGet());
 
                 NotifyConfigItemList.Clear();
 
@@ -90,23 +72,9 @@ namespace ProconApp.ViewModels
             /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
             string tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
 
-            var api = new APIManager();
 
-            try
-            {
-                /* トークンがnullなら取得処理を実行 */
-                if (tkn == null)
-                {
-                    tkn = JsonConvert.DeserializeObject<NewUserResponseJson>(await api.NewUser()).user_token;
-                    ApplicationData.Current.RoamingSettings.Values["Token"] = tkn;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
 
-           await api.GameNotificationSet(tkn,ids);
+            await APIManager.GameNotificationSet(ids);
 
         }
     }
