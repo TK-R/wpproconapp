@@ -108,16 +108,16 @@ namespace ProconApp.ViewModels
                 // 画像を反映
                 PhotoURL = photo.thumbnail_url;
                 PhotoTitle = photo.title;
-                PhotoDate = DateTimeHelper.DiffTimeString(photo.created_at, DateTime.Now); 
+                PhotoDate = DateTimeHelper.DiffTimeString(photo.created_at, DateTime.UtcNow); 
 
                 foreach (var n in notice.Take(3))
                     NoticeItemList.Add(new SummaryItem {
-                        Date = DateTimeHelper.DiffTimeString(n.published_at, DateTime.Now),
+                        Date = DateTimeHelper.DiffTimeString(n.published_at, DateTime.UtcNow),
                         Title = n.title });
 
                 foreach (var r in result)
                     ResultItemList.Add(new SummaryItem {
-                        Date = DateTimeHelper.DiffTimeString(r.finished_at, DateTime.Now),
+                        Date = DateTimeHelper.DiffTimeString(r.finished_at, DateTime.UtcNow),
                         Title = r.title
                     });
                
