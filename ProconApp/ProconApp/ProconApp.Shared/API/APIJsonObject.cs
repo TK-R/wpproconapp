@@ -94,7 +94,7 @@ namespace ProconAPI
         }
     }
 
-    public class GameNotificationSetIDs
+    public class GameNotificationIDs
     {
         public int[] ids { get; set; }
     }

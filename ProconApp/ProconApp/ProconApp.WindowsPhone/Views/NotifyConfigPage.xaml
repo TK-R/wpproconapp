@@ -24,7 +24,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" FontSize="24" Text="{Binding SchoolName}"/>
-                        <ToggleSwitch Grid.Column="1" FontSize="12" IsOn="{Binding NotifyFlag}"/>
+                        <ToggleSwitch Grid.Column="1" FontSize="12" IsOn="{Binding NotifyFlag,Mode=TwoWay}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

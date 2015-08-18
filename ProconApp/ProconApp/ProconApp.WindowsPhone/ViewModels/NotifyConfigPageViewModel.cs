@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Mvvm.Interfaces;
 using Newtonsoft.Json;
+using System.Linq;
 using ProconAPI;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace ProconApp.ViewModels
         {
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
-        
+
             // APIを用いて出場校一覧を取得
             var api = new APIManager();
 
@@ -52,24 +53,61 @@ namespace ProconApp.ViewModels
                 Debug.WriteLine(ex.ToString());
             }
 
-            //出場校一覧を取得
-            var players = JsonConvert.DeserializeObject<List<PlayerObject>>(await api.Players(tkn));
-
-            NotifyConfigItemList.Clear();
-            foreach (var p in players)
+            try
             {
-                NotifyConfigItemList.Add(new NotifyConfigItem { SchoolName = p.name, ID = p.id });
+                // 出場校一覧を取得
+                var players = JsonConvert.DeserializeObject<List<PlayerObject>>(await api.Players(tkn));
+
+                // サーバ側の通知登録リストを取得
+                var notifyList = JsonConvert.DeserializeObject<GameNotificationIDs>(await api.GameNotificationGet(tkn));
+
+                NotifyConfigItemList.Clear();
+
+                // 出場校一覧を画面に反映
+                foreach (var p in players)
+                {
+                    // サーバ側に登録されていれば、スイッチをONにする。
+                    var item = new NotifyConfigItem { SchoolName = p.name, ID = p.id };
+                    item.NotifyFlag = notifyList.ids.Any(n => n == item.ID);
+
+                    NotifyConfigItemList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
             }
         }
 
-        public override void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
+        public override async void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
         {
             // 画面遷移する前に呼ばれる
             base.OnNavigatedFrom(viewModelState, suspending);
 
             // 選択済み出場校をもとに、通知を送信
+            var ids = NotifyConfigItemList.Where(t=> t.NotifyFlag).Select(t => t.ID).ToArray();
+
+            /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
+            string tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
+
+            var api = new APIManager();
+
+            try
+            {
+                /* トークンがnullなら取得処理を実行 */
+                if (tkn == null)
+                {
+                    tkn = JsonConvert.DeserializeObject<NewUserResponseJson>(await api.NewUser()).user_token;
+                    ApplicationData.Current.RoamingSettings.Values["Token"] = tkn;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+
+           await api.GameNotificationSet(tkn,ids);
+
         }
-
-
     }
 }
