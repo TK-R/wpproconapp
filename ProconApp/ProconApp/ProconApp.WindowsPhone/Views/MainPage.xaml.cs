@@ -14,5 +14,6 @@ namespace ProconApp.Views
             this.InitializeComponent();
             ViewModelLocator.SetAutoWireViewModel(this, true);
         }
+
     }
 }

@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.Storage;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-
+using System.Linq;
 
 namespace ProconApp.ViewModels
 {
@@ -30,7 +31,6 @@ namespace ProconApp.ViewModels
         {
             get { return this.noticeItemList; }
             set { this.SetProperty(ref noticeItemList, value); }
-        
         }
 
         /// <summary>
@@ -43,6 +43,36 @@ namespace ProconApp.ViewModels
             set { this.SetProperty(ref resultItemList, value); }
         }
 
+
+        private string photoURL;
+        /// <summary>
+        /// メインページに表示する画像のURL
+        /// </summary>
+        public string PhotoURL
+        {
+            set { this.SetProperty(ref photoURL, value); }
+            get { return photoURL; }
+        }
+
+        private string photoTitle;
+        /// <summary>
+        /// メインページに表示する画像のタイトル
+        /// </summary>
+        public string PhotoTitle
+        {
+            set { this.SetProperty(ref photoTitle, value); }
+            get { return photoTitle; }
+        }
+
+        private string photoDate;
+        /// <summary>
+        /// メインページに表示する画像のタイトル
+        /// </summary>
+        public string PhotoDate
+        {
+            set { this.SetProperty(ref photoDate, value); }
+            get { return photoDate; }
+        }
 
         private DelegateCommand settingCommand;
         /// <summary>
@@ -61,20 +91,26 @@ namespace ProconApp.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
-        } 
+        }
 
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
 
-            // 速報と競技結果を取得
+            // 競技/お知らせ/画像を取得
             try
             {
                 var notice = JsonConvert.DeserializeObject<List<NoticeListObject>>(await APIManager.NoticeList(0));
                 var result = JsonConvert.DeserializeObject<List<GameResultObject>>(await APIManager.GameResult(3));
+                var photo = JsonConvert.DeserializeObject<List<PhotoData>>(await APIManager.PhotoData(1)).FirstOrDefault();
 
-                foreach (var n in notice)
+                // 画像を反映
+                PhotoURL = photo.thumbnail_url;
+                PhotoTitle = photo.title;
+                PhotoDate = DateTimeHelper.DiffTimeString(photo.created_at, DateTime.Now); 
+
+                foreach (var n in notice.Take(3))
                     NoticeItemList.Add(new SummaryItem {
                         Date = DateTimeHelper.DiffTimeString(n.published_at, DateTime.Now),
                         Title = n.title });
