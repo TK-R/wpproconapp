@@ -19,4 +19,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helper\DateTimeHelper.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources.resw" />
+  </ItemGroup>
 </Project>
