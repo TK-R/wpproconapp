@@ -94,16 +94,47 @@ namespace ProconAPI
         }
     }
 
+    /// <summary>
+    /// 通知設定の反映/取得に用いる
+    /// </summary>
     public class GameNotificationIDs
     {
         public int[] ids { get; set; }
     }
 
+    /// <summary>
+    /// デバイス情報の登録に用いる
+    /// </summary>
     public class DeviceTokenObject
     {
         public string device_type { get; set; }
         public string device_token { get; set; }
     }
+
+    /// <summary>
+    /// 写真情報の取得
+    /// </summary>
+    public class PhotoData
+    {
+        public int id { get; set; }
+        /// <summary>
+        /// 写真のタイトル
+        /// </summary>
+        public string title { get; set; }
+        /// <summary>
+        /// オリジナル画像のURL
+        /// </summary>
+        public string original_url { get; set; }
+        /// <summary>
+        /// サムネイル画像のURL
+        /// </summary>
+        public string thumbnail_url { get; set; }
+        /// <summary>
+        /// 作成日時(UNIX Timestamp)
+        /// </summary>
+        public int created_at { get; set; }
+    }
 }
+
 
 
