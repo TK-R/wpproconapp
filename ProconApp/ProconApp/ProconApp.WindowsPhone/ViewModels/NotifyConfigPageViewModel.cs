@@ -69,11 +69,6 @@ namespace ProconApp.ViewModels
             // 選択済み出場校をもとに、通知を送信
             var ids = NotifyConfigItemList.Where(t=> t.NotifyFlag).Select(t => t.ID).ToArray();
 
-            /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
-            string tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
-
-
-
             await APIManager.GameNotificationSet(ids);
 
         }

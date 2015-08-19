@@ -55,7 +55,7 @@ namespace ProconApp
             await APIManager.Initialize();
 
             // 通知ハブからuriを取得していない（初回起動時）のみ実行
-            string uri = ApplicationData.Current.RoamingSettings.Values["Ch-Uri"] as string;
+            string uri = ApplicationData.Current.LocalSettings.Values["Ch-Uri"] as string;
             if (uri != null)
                 return;
 
@@ -76,12 +76,12 @@ namespace ProconApp
             if (result.RegistrationId != null)
             {
                 /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
-                string tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
+                string tkn = ApplicationData.Current.LocalSettings.Values["Token"] as string;
 
                 var res = APIManager.PushDeviceSet(channel.Uri.ToString());
                 Debug.WriteLine(res.ToString());
 
-                ApplicationData.Current.RoamingSettings.Values["Ch-Uri"] = channel.Uri.ToString();
+                ApplicationData.Current.LocalSettings.Values["Ch-Uri"] = channel.Uri.ToString();
             }
         }
     }
