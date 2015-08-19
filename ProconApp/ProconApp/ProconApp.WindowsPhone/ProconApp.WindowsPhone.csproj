@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="ViewModels\NotifyConfigItem.cs" />
     <Compile Include="ViewModels\NotifyConfigPageViewModel.cs" />
+    <Compile Include="ViewModels\SocialItem.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

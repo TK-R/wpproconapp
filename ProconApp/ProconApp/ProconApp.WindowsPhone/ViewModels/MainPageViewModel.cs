@@ -43,6 +43,17 @@ namespace ProconApp.ViewModels
             set { this.SetProperty(ref resultItemList, value); }
         }
 
+        private ObservableCollection<SocialItem> socialItemList = new ObservableCollection<SocialItem>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public ObservableCollection<SocialItem> SocialItemList
+        {
+            get { return this.socialItemList; }
+            set { this.SetProperty(ref socialItemList, value); }
+        }
+
+
 
         private string photoURL;
         /// <summary>
@@ -121,7 +132,10 @@ namespace ProconApp.ViewModels
                         Date = DateTimeHelper.DiffTimeString(r.finished_at, DateTime.UtcNow),
                         Title = r.title
                     });
-               
+                
+                foreach(var status in  social.statuses)
+                    SocialItemList.Add(new SocialItem(status));
+
             }catch(Exception ex)
             {
                 Debug.WriteLine(ex.ToString()); 

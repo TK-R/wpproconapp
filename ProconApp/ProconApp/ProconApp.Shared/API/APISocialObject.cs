@@ -6,7 +6,6 @@ namespace ProconAPI
 {
     public class APISocialObject
     {
-
         public List<Status> statuses { get; set; }
         public SearchMetadata search_metadata { get; set; }
 

@@ -56,8 +56,8 @@
                                 <TextBlock Text="競技結果速報" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
                                 <TextBlock Text="全て表示" Grid.Column="1" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="20" TextAlignment="Right" TextWrapping="Wrap" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="87"/>
                             </Grid>
-                            <ListView    Margin="0,5,0,30"
-                                    Height="100"
+                            <ListView Margin="0,5,0,30"
+                                      Height="100"
                                     ItemsSource="{Binding ResultItemList}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
@@ -92,27 +92,35 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="ソーシャル">
-                <Grid Margin="0,0,0,0" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="画像" FontSize="47"/>
-                    <StackPanel Grid.Column="1" Margin ="10,0,0,0">
-                        <Grid  HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" FontSize="18" Text="TK-R"/>
-                            <TextBlock Grid.Column="1" FontSize="14" Text="  @tk_r" VerticalAlignment="Bottom"/>
-                            <TextBlock Grid.Column="2" HorizontalAlignment="Right"  FontSize="14"  Text=" 1m" VerticalAlignment="Bottom"/>
-                        </Grid>
-                        <TextBlock TextWrapping="Wrap" Width="250" Text="ツイート本文をこちらに表示
-                                          シンシア俺だ結婚してくれー" FontSize="24" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Grid>
+
+                <ListView Margin="0,0,-0.333,-0.167"
+                                    ItemsSource="{Binding SocialItemList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="52"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Margin="5" Source="{Binding IconURL}" VerticalAlignment="Top" />
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin ="2,0,0,0">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontSize="17" Text="{Binding Name}"/>
+                                        <TextBlock Grid.Column="1" FontSize="14" Text="{Binding ScreenName}" Foreground="Gray" Margin="5,0,0,0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Grid.Column="2" FontSize="14" Text="{Binding Date}" Foreground="Gray" Margin="-5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                    </Grid>
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Tweet}" FontSize="14" Width="280" Margin="4"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
             </PivotItem>
         </Pivot>
 
