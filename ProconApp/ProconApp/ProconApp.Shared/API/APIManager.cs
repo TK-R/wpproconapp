@@ -327,5 +327,33 @@ namespace ProconAPI
                 return null;
             }
         }
+
+        /// <summary>
+        /// ソーシャルフィードのアイテムを取得する
+        /// </summary>
+        /// <param name="count">取得個数</param>
+        /// <returns></returns>
+        public static async Task<string> SocialData(int count)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
+
+            try
+            {
+                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/social_feed/twitter?count=" + count));
+                return await res.Content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException he)
+            {
+                Debug.WriteLine(he.ToString());
+                return null;
+            }
+            catch (Exception e)
+            {
+                // For debugging
+                Debug.WriteLine(e.ToString());
+                return null;
+            }
+        }
     }
 }

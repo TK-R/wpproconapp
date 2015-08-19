@@ -104,6 +104,7 @@ namespace ProconApp.ViewModels
                 var notice = JsonConvert.DeserializeObject<List<NoticeListObject>>(await APIManager.NoticeList(0));
                 var result = JsonConvert.DeserializeObject<List<GameResultObject>>(await APIManager.GameResult(3));
                 var photo = JsonConvert.DeserializeObject<List<PhotoData>>(await APIManager.PhotoData(1)).FirstOrDefault();
+                var social = JsonConvert.DeserializeObject<APISocialObject>(await APIManager.SocialData(30));
 
                 // 画像を反映
                 PhotoURL = photo.thumbnail_url;

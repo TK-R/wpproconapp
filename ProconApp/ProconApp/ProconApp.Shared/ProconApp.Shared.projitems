@@ -14,6 +14,7 @@
     </ApplicationDefinition>
     <Compile Include="$(MSBuildThisFileDirectory)API\APIJsonObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)API\APIManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)API\APISocialObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

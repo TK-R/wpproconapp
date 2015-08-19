@@ -92,7 +92,27 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="ソーシャル">
-                <Grid/>
+                <Grid Margin="0,0,0,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="画像" FontSize="47"/>
+                    <StackPanel Grid.Column="1" Margin ="10,0,0,0">
+                        <Grid  HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontSize="18" Text="TK-R"/>
+                            <TextBlock Grid.Column="1" FontSize="14" Text="  @tk_r" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Right"  FontSize="14"  Text=" 1m" VerticalAlignment="Bottom"/>
+                        </Grid>
+                        <TextBlock TextWrapping="Wrap" Width="250" Text="ツイート本文をこちらに表示
+                                          シンシア俺だ結婚してくれー" FontSize="24" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Grid>
             </PivotItem>
         </Pivot>
 
