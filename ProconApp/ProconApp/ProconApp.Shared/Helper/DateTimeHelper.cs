@@ -74,7 +74,7 @@ namespace ProconApp
         public static DateTime FromTweetTime(string txt)
         {
             var format = "ddd MMM dd HH:mm:ss zzz yyyy";
-            return  DateTime.ParseExact(txt, format, System.Globalization.CultureInfo.InvariantCulture);
+            return  DateTime.ParseExact(txt, format, System.Globalization.CultureInfo.InvariantCulture).ToUniversalTime();
         }
 
     }
