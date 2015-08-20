@@ -1,16 +1,16 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Mvvm.Interfaces;
-using Newtonsoft.Json;
-using ProconAPI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using System.Linq;
+
+using ProconApp.Models;
 
 namespace ProconApp.ViewModels
 {
@@ -22,7 +22,9 @@ namespace ProconApp.ViewModels
         /// コンストラクタで渡してもらったNavigationService 
         /// </summary>
         private INavigationService navigationService;
-        
+
+        #region NoticeItemList
+
         private ObservableCollection<SummaryItem> noticeItemList = new ObservableCollection<SummaryItem>();
         /// <summary>
         /// お知らせ一覧に表示されるList
@@ -32,6 +34,10 @@ namespace ProconApp.ViewModels
             get { return this.noticeItemList; }
             set { this.SetProperty(ref noticeItemList, value); }
         }
+        
+        #endregion
+
+        #region ResultItemList
 
         /// <summary>
         /// 競技結果速報に表示されるList
@@ -42,58 +48,80 @@ namespace ProconApp.ViewModels
             get { return this.resultItemList; }
             set { this.SetProperty(ref resultItemList, value); }
         }
+        
+        #endregion
 
-        private ObservableCollection<SocialItem> socialItemList = new ObservableCollection<SocialItem>();
+        #region SocialItemList
+
+        private ObservableCollection<Social.SocialItem> socialItemList = new ObservableCollection<Social.SocialItem>();
         /// <summary>
         /// 
         /// </summary>
-        public ObservableCollection<SocialItem> SocialItemList
+        public ObservableCollection<Social.SocialItem> SocialItemList
         {
             get { return this.socialItemList; }
             set { this.SetProperty(ref socialItemList, value); }
         }
+        
+        #endregion
 
+        #region PhotoItem
 
-
-        private string photoURL;
+        private Photo.PhotoItem photoItem;
         /// <summary>
-        /// メインページに表示する画像のURL
+        /// メインページに表示する画像
         /// </summary>
-        public string PhotoURL
+        public Photo.PhotoItem PhotoItem
         {
-            set { this.SetProperty(ref photoURL, value); }
-            get { return photoURL; }
+            get { return photoItem; }
+            set { this.SetProperty(ref photoItem, value); }
+        }
+        
+        #endregion
+
+        #region SelectedIndex
+
+        private int selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return selectedIndex; }
+            set
+            {
+                if (this.SetProperty(ref selectedIndex, value))
+                {
+                    update();
+                }
+            }
         }
 
-        private string photoTitle;
-        /// <summary>
-        /// メインページに表示する画像のタイトル
-        /// </summary>
-        public string PhotoTitle
+        #endregion
+
+        #region MainPageEnum
+
+        enum MainPageEnum
         {
-            set { this.SetProperty(ref photoTitle, value); }
-            get { return photoTitle; }
+            Home,
+            Social
         }
 
-        private string photoDate;
-        /// <summary>
-        /// メインページに表示する画像のタイトル
-        /// </summary>
-        public string PhotoDate
-        {
-            set { this.SetProperty(ref photoDate, value); }
-            get { return photoDate; }
-        }
+        #endregion
 
-        private DelegateCommand settingCommand;
-        /// <summary>
-        /// ViewにバインドされるSettingCommand
-        /// </summary>
-        public DelegateCommand SettingCommand
+        public async void update()
         {
-            get { return this.settingCommand ?? (this.settingCommand = new DelegateCommand(SettingExecute)); }
+            if (SelectedIndex == (int)MainPageEnum.Home)
+            {
+                NoticeItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0));
+                ResultItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
+                PhotoItem = (await Photo.getPhotos(1)).FirstOrDefault();
+                return;
+            }
+            else if(SelectedIndex == (int)MainPageEnum.Social)
+            {
+                SocialItemList = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
+                return;
+            }
         }
-
 
         /// <summary>
         /// NavigationServiceを受け取るためのコンストラクタ
@@ -104,7 +132,7 @@ namespace ProconApp.ViewModels
             this.navigationService = navigationService;
         }
 
-        public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
+        public override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
@@ -112,31 +140,9 @@ namespace ProconApp.ViewModels
             // 競技/お知らせ/画像を取得
             try
             {
-                var notice = JsonConvert.DeserializeObject<List<NoticeListObject>>(await APIManager.NoticeList(0));
-                var result = JsonConvert.DeserializeObject<List<GameResultObject>>(await APIManager.GameResult(3));
-                var photo = JsonConvert.DeserializeObject<List<PhotoData>>(await APIManager.PhotoData(1)).FirstOrDefault();
-                var social = JsonConvert.DeserializeObject<APISocialObject>(await APIManager.SocialData(30));
-
-                // 画像を反映
-                PhotoURL = photo.thumbnail_url;
-                PhotoTitle = photo.title;
-                PhotoDate = DateTimeHelper.DiffTimeString(photo.created_at, DateTime.UtcNow); 
-
-                foreach (var n in notice.Take(3))
-                    NoticeItemList.Add(new SummaryItem {
-                        Date = DateTimeHelper.DiffTimeString(n.published_at, DateTime.UtcNow),
-                        Title = n.title });
-
-                foreach (var r in result)
-                    ResultItemList.Add(new SummaryItem {
-                        Date = DateTimeHelper.DiffTimeString(r.finished_at, DateTime.UtcNow),
-                        Title = r.title
-                    });
-                
-                foreach(var status in  social.statuses)
-                    SocialItemList.Add(new SocialItem(status));
-
-            }catch(Exception ex)
+                update();
+            }
+            catch(Exception ex)
             {
                 Debug.WriteLine(ex.ToString()); 
             }
@@ -150,13 +156,69 @@ namespace ProconApp.ViewModels
 
         }
 
-        /// <summary>
-        /// 通知画面の呼び出しを行う
-        /// </summary>
-        private void SettingExecute()
+        #region NavigateCommand
+
+        public class NavigateCommandClass : System.Windows.Input.ICommand
         {
-            this.navigationService.Navigate("NotifyConfig", null);
+            private Action<NavigateEnum> action;
+            public NavigateCommandClass(Action<NavigateEnum> action)
+            {
+                this.action = action;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                action.Invoke((NavigateEnum)Enum.Parse(typeof(NavigateEnum), (string)parameter));
+            }
         }
+
+        public enum NavigateEnum
+        {
+            Setting,
+            Notice,
+            GameResult,
+            Photo
+        }
+
+        private NavigateCommandClass navigateCommand;
+        /// <summary>
+        /// ViewにバインドされるNavigateCommand
+        /// </summary>
+        public NavigateCommandClass NavigateCommand
+        {
+            get { return this.navigateCommand ?? (this.navigateCommand = new NavigateCommandClass(Navigate)); }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 画面の呼び出しを行う
+        /// </summary>
+        protected void Navigate(NavigateEnum param)
+        {
+            switch (param)
+            {
+                case NavigateEnum.Setting:
+                    this.navigationService.Navigate("NotifyConfig", null);
+                    break;
+                case NavigateEnum.Notice:
+                    break;
+                case NavigateEnum.GameResult:
+                    break;
+                case NavigateEnum.Photo:
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 
 }
