@@ -26,15 +26,22 @@ namespace ProconApp
     {
         protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
         {
-            // 通知ハブに登録
-            InitNotificationsAsync();
-
-            this.NavigationService.Navigate("Main", args.Arguments);
 
             var rootFrame = (Frame)Window.Current.Content;
             rootFrame.Language = ApplicationLanguages.Languages[0];
 
             return Task.FromResult(default(object));
+        }
+
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            await InitNotificationsAsync();
+
+            // 通知ハブに登録
+            base.OnLaunched(args); 
+            
+            this.NavigationService.Navigate("Main", args.Arguments);
+            
         }
 
         protected override Task OnInitializeAsync(IActivatedEventArgs args)
@@ -49,7 +56,7 @@ namespace ProconApp
             return base.OnInitializeAsync(args);
         }
 
-        private async void InitNotificationsAsync()
+        private async Task InitNotificationsAsync()
         {
             // APIManagerの初期化処理
             await APIManager.Initialize();
