@@ -32,6 +32,12 @@ namespace ProconApp.Models
             public int ID { get; set; }
         }
 
+        /// <summary>
+        /// 学校リストと通知設定リストから表示用Itemを作成
+        /// </summary>
+        /// <param name="players"></param>
+        /// <param name="notifyList"></param>
+        /// <returns></returns>
         public static IEnumerable<NotifyConfigItem> getNotifyConfigItems(IEnumerable<PlayerObject> players, GameNotificationIDs notifyList)
         {
             foreach (var p in players)
@@ -39,6 +45,19 @@ namespace ProconApp.Models
                 // サーバ側に登録されていれば、スイッチをONにする。
                 var item = new NotifyConfigItem { SchoolName = p.name, ID = p.id };
                 item.NotifyFlag = notifyList.ids.Any(n => n == item.ID);
+                yield return item;
+            }
+        }
+        /// <summary>
+        /// 初回起動時に全通知フラグON
+        /// </summary>
+        /// <param name="players"></param>
+        /// <returns></returns>
+        public static IEnumerable<NotifyConfigItem> getNotifyConfigItems(IEnumerable<PlayerObject> players)
+        {
+            foreach (var p in players)
+            {
+                var item = new NotifyConfigItem { SchoolName = p.name, ID = p.id, NotifyFlag = true};
                 yield return item;
             }
         }

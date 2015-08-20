@@ -9,6 +9,9 @@ using ProconAPI;
 
 namespace ProconApp.Models
 {
+    /// <summary>
+    /// 出場校
+    /// </summary>
     public class Player
     {
         public static async Task<IEnumerable<PlayerObject>> getPlayers()

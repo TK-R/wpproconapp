@@ -9,6 +9,9 @@ using ProconAPI;
 
 namespace ProconApp.Models
 {
+    /// <summary>
+    /// 競技結果
+    /// </summary>
     public class GameResult
     {
         public static async Task<IEnumerable<SummaryItem>> getGameResults(int count)

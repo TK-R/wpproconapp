@@ -8,7 +8,13 @@ namespace ProconApp.Models
 {
     public class SummaryItem 
     {
+        /// <summary>
+        /// 時刻
+        /// </summary>
         public string Date { get; set; }
+        /// <summary>
+        /// タイトル
+        /// </summary>
         public string Title { get; set; }
     }
 }

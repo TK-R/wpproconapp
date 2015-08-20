@@ -9,6 +9,9 @@ using ProconAPI;
 
 namespace ProconApp.Models
 {
+    /// <summary>
+    /// お知らせ概要
+    /// </summary>
     public class SummaryNotice
     {
         public static async Task<IEnumerable<SummaryItem>> getNotices(int page, int num)

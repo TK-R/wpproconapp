@@ -41,8 +41,6 @@ namespace ProconApp.ViewModels
             {
                 // 出場校一覧を取得
                 var players = await Player.getPlayers();
-                // サーバ側の通知登録リストを取得
-                var notifyList = await GameNotification.getGameNotification();
 
 
                 // 初回起動時の場合、設定画面に強制遷移
@@ -51,13 +49,17 @@ namespace ProconApp.ViewModels
                 // 初回起動時にはすべての通知をON
                 if (firstLaunch as string == null)
                 {
-                    notifyList.ids = players.Select(p => p.id).ToArray();
+                    NotifyConfigItemList = new ObservableCollection<NotifyConfig.NotifyConfigItem>(NotifyConfig.getNotifyConfigItems(players));
 
                     // フラグを埋め立て
                     ApplicationData.Current.LocalSettings.Values["FisrtLaunch"] = "Done";
                 }
-
-                NotifyConfigItemList = new ObservableCollection<NotifyConfig.NotifyConfigItem>(NotifyConfig.getNotifyConfigItems(players, notifyList));
+                else
+                {
+                    // サーバ側の通知登録リストを取得
+                    var notifyList = await GameNotification.getGameNotification();
+                    NotifyConfigItemList = new ObservableCollection<NotifyConfig.NotifyConfigItem>(NotifyConfig.getNotifyConfigItems(players, notifyList));
+                }
             }
             catch (Exception ex)
             {

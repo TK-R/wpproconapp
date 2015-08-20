@@ -9,6 +9,9 @@ using ProconAPI;
 
 namespace ProconApp.Models
 {
+    /// <summary>
+    /// 通知設定
+    /// </summary>
     public class GameNotification
     {
         public static async Task<GameNotificationIDs> getGameNotification()
