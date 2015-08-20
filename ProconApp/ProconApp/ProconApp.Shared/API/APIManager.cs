@@ -18,7 +18,7 @@ namespace ProconAPI
         /// <summary>
         /// プロコンAPIサーバーのURL
         /// </summary>
-        private static string APIDomainDev;
+        private static string APIDomain;
 
         /// <summary>
         /// Manager内で共通で使用するユーザートークン
@@ -33,9 +33,9 @@ namespace ProconAPI
         public static async Task Initialize()
         {
             var resLoader = ResourceLoader.GetForCurrentView("Resources");
-            APIDomainDev = resLoader.GetString("domain");
+            APIDomain = resLoader.GetString("domain");
 
-            var tkn = ApplicationData.Current.RoamingSettings.Values["Token"] as string;
+            var tkn = ApplicationData.Current.LocalSettings.Values["Token"] as string;
             if (tkn != null)
             {
                 UserToken = tkn;
@@ -46,9 +46,9 @@ namespace ProconAPI
          
             try
             {
-                var res = await httpClient.PostAsync(new Uri(APIDomainDev + "/auth/new_user"), null);
+                var res = await httpClient.PostAsync(new Uri(APIDomain + "/auth/new_user"), null);
                 UserToken = JsonConvert.DeserializeObject<NewUserResponseJson>(await res.Content.ReadAsStringAsync()).user_token;
-                ApplicationData.Current.RoamingSettings.Values["Token"] = UserToken;
+                ApplicationData.Current.LocalSettings.Values["Token"] = UserToken;
             }
             catch (HttpRequestException he)
             {
@@ -73,7 +73,7 @@ namespace ProconAPI
             httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
             try
             {                
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/user/me/info"));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/user/me/info"));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -101,7 +101,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/notices/list?page=" + page.ToString()));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/notices/list?page=" + page.ToString()));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -129,7 +129,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/notices/info?id="+ itemID.ToString()));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/notices/info?id="+ itemID.ToString()));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -156,7 +156,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/players"));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/players"));
                 return await res.Content.ReadAsStringAsync();
 
             }
@@ -186,7 +186,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/game/game_results?count=" + count.ToString()));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/game/game_results?count=" + count.ToString()));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -220,7 +220,7 @@ namespace ProconAPI
     
             try
             {
-                var res = await httpClient.PutAsync(new Uri(APIDomainDev + "/user/me/game_notification"), content);
+                var res = await httpClient.PutAsync(new Uri(APIDomain + "/user/me/game_notification"), content);
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -247,7 +247,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/user/me/game_notification"));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/user/me/game_notification"));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -284,7 +284,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.PutAsync(new Uri(APIDomainDev + "/user/me/push_token"), content);
+                var res = await httpClient.PutAsync(new Uri(APIDomain + "/user/me/push_token"), content);
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -312,7 +312,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/game/photos?count=" + count));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/game/photos?count=" + count));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
@@ -340,7 +340,7 @@ namespace ProconAPI
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomainDev + "/social_feed/twitter?count=" + count));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/social_feed/twitter?count=" + count));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)

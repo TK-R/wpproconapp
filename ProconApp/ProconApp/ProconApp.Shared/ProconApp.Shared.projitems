@@ -21,6 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\DateTimeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources.resw">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </PRIResource>
   </ItemGroup>
 </Project>

@@ -11,7 +11,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <prism:VisualStateAwarePage.BottomAppBar>
         <CommandBar Height="17">
-            <AppBarButton Icon="Setting" Command="{Binding NavigateCommand}" CommandParameter="Setting" Label="設定"/>
+            <AppBarButton Icon="Map" Command="{Binding NavigateCommand}" CommandParameter="Map" Label="アクセス"/>
+            <AppBarButton Icon="Document" Command="{Binding NavigateCommand}" CommandParameter="Program" Label="プログラム"/>
+            <AppBarButton Icon="Setting" Command="{Binding NavigateCommand}" CommandParameter="Setting" Label="通知設定"/>
         </CommandBar>
     </prism:VisualStateAwarePage.BottomAppBar>
 
@@ -27,8 +29,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="110"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="お知らせ" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
-                                <Button Content="全て表示" Grid.Column="2" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="Notice" BorderThickness="0"/>
+                                <TextBlock Text="お知らせ" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
+                                <Button Content="全て表示" Grid.Column="2" FontSize="18" VerticalAlignment="Top" Margin="-10" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="Notice" BorderThickness="0"/>
                             </Grid>
                             <ListView   Margin="0,5,0,30"
                                     Height="100"
@@ -55,8 +57,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="110"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="競技結果速報" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
-                                <Button Content="全て表示" Grid.Column="2" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="GameResult" BorderThickness="0"/>
+                                <TextBlock Text="競技結果速報" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
+                                <Button Content="全て表示" Grid.Column="2" FontSize="18"  VerticalAlignment="Top" Margin="-10" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="GameResult" BorderThickness="0"/>
                             </Grid>
                             <ListView Margin="0,5,0,30"
                                       Height="100"
@@ -83,12 +85,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="110"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="会場フォト" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
-                                <Button Content="全て表示" Grid.Column="2" FontSize="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="Photo" BorderThickness="0"/>
+                                <TextBlock Text="会場フォト" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
+                                <Button Content="全て表示"  Grid.Column="2" FontSize="18" VerticalAlignment="Top" Margin="-10" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="Photo" BorderThickness="0"/>
                             </Grid>
-                            <TextBlock Text="{Binding PhotoItem.Date}" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding PhotoItem.Date}" Style="{ThemeResource HeaderTextBlockStyle}" HorizontalAlignment="Left" Foreground="Gray" FontSize="18" Margin="0,5,0,0" TextWrapping="Wrap"/>
                             <Image Source="{Binding PhotoItem.URL}" Height="250"  Stretch="Uniform" Margin="0,-10,0,0" />
-                            <TextBlock Text="{Binding PhotoItem.Title}" Style="{ThemeResource HeaderTextBlockStyle}" TextAlignment="Center"  FontSize="24" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
+                            <TextBlock Text="{Binding PhotoItem.Title}" Style="{ThemeResource HeaderTextBlockStyle}" TextAlignment="Center"  FontSize="18" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
 
                         </StackPanel>
                     </Grid>

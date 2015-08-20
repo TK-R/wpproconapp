@@ -11,7 +11,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Text="通知設定" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,26,39,577"/>
+        <TextBlock Text="通知設定" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,26,39,0" Height="37" VerticalAlignment="Top"/>
         <ListView HorizontalAlignment="Left" 
                   Height="545" Margin="19,90,0,0" 
                   VerticalAlignment="Top" Width="371"
