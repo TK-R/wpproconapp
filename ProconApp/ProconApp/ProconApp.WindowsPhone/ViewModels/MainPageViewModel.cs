@@ -11,6 +11,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 using ProconApp.Models;
+using Windows.UI.Xaml;
+using Windows.UI.Core;
 
 namespace ProconApp.ViewModels
 {
@@ -132,7 +134,7 @@ namespace ProconApp.ViewModels
             this.navigationService = navigationService;
         }
 
-        public override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
+        public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
@@ -142,11 +144,26 @@ namespace ProconApp.ViewModels
             {
                 update();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString()); 
+                Debug.WriteLine(ex.ToString());
             }
 
+            // 初回起動時の場合、設定画面に強制遷移
+            var firstLaunch = ApplicationData.Current.LocalSettings.Values["FisrtLaunch"];
+            if (firstLaunch != null) 
+                return;
+            
+            var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                this.navigationService.Navigate("NotifyConfig", "FirstLaunch");
+
+            }); 
+        
+            // フラグを埋め立て
+            ApplicationData.Current.LocalSettings.Values["FisrtLaunch"] = "Done";
+        
         }
 
         public override void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
@@ -184,7 +201,9 @@ namespace ProconApp.ViewModels
             Setting,
             Notice,
             GameResult,
-            Photo
+            Photo,
+            Map,
+            Program
         }
 
         private NavigateCommandClass navigateCommand;
@@ -213,6 +232,10 @@ namespace ProconApp.ViewModels
                 case NavigateEnum.GameResult:
                     break;
                 case NavigateEnum.Photo:
+                    break;
+                case NavigateEnum.Map:
+                    break;
+                case NavigateEnum.Program:
                     break;
                 default:
                     break;

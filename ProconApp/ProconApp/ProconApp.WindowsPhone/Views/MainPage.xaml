@@ -88,7 +88,7 @@
                                 <TextBlock Text="会場フォト" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
                                 <Button Content="全て表示"  Grid.Column="2" FontSize="18" VerticalAlignment="Top" Margin="-10" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="Photo" BorderThickness="0"/>
                             </Grid>
-                            <TextBlock Text="{Binding PhotoItem.Date}" Style="{ThemeResource HeaderTextBlockStyle}" HorizontalAlignment="Left" Foreground="Gray" FontSize="18" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding PhotoItem.Date}" Style="{ThemeResource HeaderTextBlockStyle}" HorizontalAlignment="Right" Foreground="Gray" FontSize="18" Margin="0,5,0,0" TextWrapping="Wrap"/>
                             <Image Source="{Binding PhotoItem.URL}" Height="250"  Stretch="Uniform" Margin="0,-10,0,0" />
                             <TextBlock Text="{Binding PhotoItem.Title}" Style="{ThemeResource HeaderTextBlockStyle}" TextAlignment="Center"  FontSize="18" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
 

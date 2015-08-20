@@ -35,11 +35,10 @@ namespace ProconApp
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            await InitNotificationsAsync();
+            base.OnLaunched(args);
 
             // 通知ハブに登録
-            base.OnLaunched(args); 
-            
+            await InitNotificationsAsync();
             this.NavigationService.Navigate("Main", args.Arguments);
             
         }

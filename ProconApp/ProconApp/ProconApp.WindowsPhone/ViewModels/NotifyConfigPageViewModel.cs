@@ -41,9 +41,13 @@ namespace ProconApp.ViewModels
             {
                 // 出場校一覧を取得
                 var players = await Player.getPlayers();
-
-                var notifyList = await GameNotification.getGameNotification();
                 // サーバ側の通知登録リストを取得
+                var notifyList = await GameNotification.getGameNotification();
+
+                // 初回起動時にはすべての通知をON
+                if (navigationParameter as string != null)
+                    notifyList.ids = players.Select(p => p.id).ToArray();
+                
                 NotifyConfigItemList = new ObservableCollection<NotifyConfig.NotifyConfigItem>(NotifyConfig.getNotifyConfigItems(players, notifyList));
             }
             catch (Exception ex)
