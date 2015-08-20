@@ -9,14 +9,14 @@ using ProconAPI;
 
 namespace ProconApp.Models
 {
-    public class Notice
+    public class SummaryNotice
     {
-        public static async Task<IEnumerable<SummaryItem>> getNotices(int page)
+        public static async Task<IEnumerable<SummaryItem>> getNotices(int page, int num)
         {
             var notices = JsonConvert.DeserializeObject<List<NoticeListObject>>(await APIManager.NoticeList(page));
 
             var result = notices
-                .Take(3)
+                .Take(num)
                 .Select(notice =>
                     new SummaryItem
                     {

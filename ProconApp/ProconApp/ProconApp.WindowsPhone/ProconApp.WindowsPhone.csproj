@@ -84,12 +84,14 @@
   <ItemGroup>
     <Compile Include="Models\GameNotification.cs" />
     <Compile Include="Models\GameResult.cs" />
-    <Compile Include="Models\Notice.cs" />
+    <Compile Include="Models\NoticeItem.cs" />
+    <Compile Include="Models\SummaryNotice.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\NotifyConfig.cs" />
     <Compile Include="ViewModels\NotifyConfigPageViewModel.cs" />
     <Compile Include="Models\Social.cs" />
+    <Compile Include="ViewModels\NotifyPageViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -98,6 +100,9 @@
     <Compile Include="Models\SummaryItem.cs" />
     <Compile Include="Views\NotifyConfigPage.xaml.cs">
       <DependentUpon>NotifyConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotifyPage.xaml.cs">
+      <DependentUpon>NotifyPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NotifyConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotifyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

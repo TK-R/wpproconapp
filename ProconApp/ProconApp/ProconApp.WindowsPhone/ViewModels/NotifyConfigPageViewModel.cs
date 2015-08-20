@@ -44,10 +44,19 @@ namespace ProconApp.ViewModels
                 // サーバ側の通知登録リストを取得
                 var notifyList = await GameNotification.getGameNotification();
 
+
+                // 初回起動時の場合、設定画面に強制遷移
+                var firstLaunch = ApplicationData.Current.LocalSettings.Values["FisrtLaunch"];
+          
                 // 初回起動時にはすべての通知をON
-                if (navigationParameter as string != null)
+                if (firstLaunch as string == null)
+                {
                     notifyList.ids = players.Select(p => p.id).ToArray();
-                
+
+                    // フラグを埋め立て
+                    ApplicationData.Current.LocalSettings.Values["FisrtLaunch"] = "Done";
+                }
+
                 NotifyConfigItemList = new ObservableCollection<NotifyConfig.NotifyConfigItem>(NotifyConfig.getNotifyConfigItems(players, notifyList));
             }
             catch (Exception ex)

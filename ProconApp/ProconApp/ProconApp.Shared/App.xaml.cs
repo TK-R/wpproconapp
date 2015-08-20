@@ -51,6 +51,8 @@ namespace ProconApp
                 typeof(MainPage).FullName, () => new MainPageViewModel(this.NavigationService));
             ViewModelLocationProvider.Register(
                 typeof(NotifyConfigPage).FullName, () => new NotifyConfigPageViewModel());
+            ViewModelLocationProvider.Register(
+                typeof(NotifyPage).FullName, () => new NotifyPageViewModel());
 #endif
             return base.OnInitializeAsync(args);
         }

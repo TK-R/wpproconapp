@@ -113,7 +113,7 @@ namespace ProconApp.ViewModels
         {
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
-                NoticeItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0));
+                NoticeItemList = new ObservableCollection<SummaryItem>(await SummaryNotice.getNotices(0, 3));
                 ResultItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
                 PhotoItem = (await Photo.getPhotos(1)).FirstOrDefault();
                 return;
@@ -149,20 +149,6 @@ namespace ProconApp.ViewModels
                 Debug.WriteLine(ex.ToString());
             }
 
-            // 初回起動時の場合、設定画面に強制遷移
-            var firstLaunch = ApplicationData.Current.LocalSettings.Values["FisrtLaunch"];
-            if (firstLaunch != null) 
-                return;
-            
-            var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                this.navigationService.Navigate("NotifyConfig", "FirstLaunch");
-
-            }); 
-        
-            // フラグを埋め立て
-            ApplicationData.Current.LocalSettings.Values["FisrtLaunch"] = "Done";
         
         }
 
@@ -228,6 +214,7 @@ namespace ProconApp.ViewModels
                     this.navigationService.Navigate("NotifyConfig", null);
                     break;
                 case NavigateEnum.Notice:
+                    this.navigationService.Navigate("Notify", null);
                     break;
                 case NavigateEnum.GameResult:
                     break;
