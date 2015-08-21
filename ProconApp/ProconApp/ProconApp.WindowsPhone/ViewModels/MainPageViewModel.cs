@@ -27,11 +27,11 @@ namespace ProconApp.ViewModels
 
         #region NoticeItemList
 
-        private ObservableCollection<SummaryItem> noticeItemList = new ObservableCollection<SummaryItem>();
+        private ObservableCollection<Notice.NoticeSummaryItem> noticeItemList = new ObservableCollection<Notice.NoticeSummaryItem>();
         /// <summary>
         /// お知らせ一覧に表示されるList
         /// </summary>
-        public ObservableCollection<SummaryItem> NoticeItemList
+        public ObservableCollection<Notice.NoticeSummaryItem> NoticeItemList
         {
             get { return this.noticeItemList; }
             set { this.SetProperty(ref noticeItemList, value); }
@@ -113,7 +113,7 @@ namespace ProconApp.ViewModels
         {
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
-                NoticeItemList = new ObservableCollection<SummaryItem>(await SummaryNotice.getNotices(0, 3));
+                NoticeItemList = new ObservableCollection<Notice.NoticeSummaryItem>(await Notice.getNotices(0, 3));
                 ResultItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
                 PhotoItem = (await Photo.getPhotos(1)).FirstOrDefault();
                 return;

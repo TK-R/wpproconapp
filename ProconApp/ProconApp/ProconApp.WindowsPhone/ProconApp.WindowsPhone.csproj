@@ -84,8 +84,7 @@
   <ItemGroup>
     <Compile Include="Models\GameNotification.cs" />
     <Compile Include="Models\GameResult.cs" />
-    <Compile Include="Models\NoticeItem.cs" />
-    <Compile Include="Models\SummaryNotice.cs" />
+    <Compile Include="Models\Notice.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\NotifyConfig.cs" />

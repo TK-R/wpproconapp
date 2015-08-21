@@ -93,15 +93,16 @@ namespace ProconAPI
         /// お知らせ一覧取得
         /// </summary>
         /// <param name="page">リクエストするページNo.</param>
+        /// <param name="count">取得するお知らせ数</param>
         /// <returns>お知らせ一覧の文字列データ</returns>
-        public static async Task<string> NoticeList(int page)
+        public static async Task<string> NoticeList(int page, int count)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
 
             try
             {
-                var res = await httpClient.GetAsync(new Uri(APIDomain + "/notices/list?page=" + page.ToString()));
+                var res = await httpClient.GetAsync(new Uri(APIDomain + "/notices/list?page=" + page.ToString() + "&count=" + count.ToString()));
                 return await res.Content.ReadAsStringAsync();
             }
             catch (HttpRequestException he)
