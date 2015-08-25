@@ -178,6 +178,12 @@
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ProconApp.Windows_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <Import Project="..\ProconApp.Shared\ProconApp.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -90,6 +90,9 @@
     <Compile Include="Models\NotifyConfig.cs" />
     <Compile Include="ViewModels\NotifyConfigPageViewModel.cs" />
     <Compile Include="Models\Social.cs" />
+    <Compile Include="ViewModels\WebPageViewModel.cs" />
+    <Compile Include="ViewModels\PhotoPageViewModel.cs" />
+    <Compile Include="ViewModels\PhotoListPageViewModel.cs" />
     <Compile Include="ViewModels\NotifyPageViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -99,6 +102,15 @@
     <Compile Include="Models\SummaryItem.cs" />
     <Compile Include="Views\NotifyConfigPage.xaml.cs">
       <DependentUpon>NotifyConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebPage.xaml.cs">
+      <DependentUpon>WebPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PhotoPage.xaml.cs">
+      <DependentUpon>PhotoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PhotoListPage.xaml.cs">
+      <DependentUpon>PhotoListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NotifyPage.xaml.cs">
       <DependentUpon>NotifyPage.xaml</DependentUpon>
@@ -174,6 +186,18 @@
     <Page Include="Views\NotifyConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WebPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PhotoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PhotoListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\NotifyPage.xaml">
       <SubType>Designer</SubType>

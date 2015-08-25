@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Navigation;
 using ProconApp.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 
 namespace ProconApp.ViewModels
 {
@@ -24,6 +26,18 @@ namespace ProconApp.ViewModels
         /// コンストラクタで渡してもらったNavigationService 
         /// </summary>
         private INavigationService navigationService;
+
+        #region URL
+        /// <summary>
+        /// WebPageに表示するMapのURL
+        /// </summary>
+        static string RouteUrl;
+
+        /// <summary>
+        /// WebPageに表示する当日プログラムのURL
+        /// </summary>
+        static string ProgramUrl;
+        #endregion
 
         #region NoticeItemList
 
@@ -109,7 +123,7 @@ namespace ProconApp.ViewModels
 
         #endregion
 
-        public async void update()
+        public async Task update()
         {
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
@@ -132,6 +146,11 @@ namespace ProconApp.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+
+            // URLを初期化
+            var resLoader = ResourceLoader.GetForCurrentView("Resources");
+            RouteUrl = resLoader.GetString("routeurl");
+            ProgramUrl = resLoader.GetString("programurl");
         }
 
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
@@ -142,21 +161,18 @@ namespace ProconApp.ViewModels
             // 競技/お知らせ/画像を取得
             try
             {
-                update();
+               await update();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
             }
-
-        
         }
 
         public override void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
         {
             // 画面遷移する前に呼ばれる
             base.OnNavigatedFrom(viewModelState, suspending);
-
         }
 
         #region NavigateCommand
@@ -182,12 +198,13 @@ namespace ProconApp.ViewModels
             }
         }
 
+
         public enum NavigateEnum
         {
             Setting,
             Notice,
             GameResult,
-            Photo,
+            PhotoList,
             Map,
             Program
         }
@@ -202,6 +219,8 @@ namespace ProconApp.ViewModels
         }
 
         #endregion
+
+        
 
         /// <summary>
         /// 画面の呼び出しを行う
@@ -218,11 +237,15 @@ namespace ProconApp.ViewModels
                     break;
                 case NavigateEnum.GameResult:
                     break;
-                case NavigateEnum.Photo:
+                case NavigateEnum.PhotoList:
+                    this.navigationService.Navigate("PhotoList", null);
                     break;
                 case NavigateEnum.Map:
+                    this.navigationService.Navigate("Web", RouteUrl);
                     break;
                 case NavigateEnum.Program:
+                    
+                    this.navigationService.Navigate("Web", ProgramUrl);
                     break;
                 default:
                     break;

@@ -1,4 +1,5 @@
-﻿<prism:VisualStateAwarePage
+﻿
+<prism:VisualStateAwarePage
     x:Class="ProconApp.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,8 +11,6 @@
     mc:Ignorable="d"   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
-    
     <prism:VisualStateAwarePage.BottomAppBar>
         <CommandBar Height="17">
             <AppBarButton Icon="Map" Command="{Binding NavigateCommand}" CommandParameter="Map" Label="アクセス"/>
@@ -19,7 +18,7 @@
             <AppBarButton Icon="Setting" Command="{Binding NavigateCommand}" CommandParameter="Setting" Label="通知設定"/>
         </CommandBar>
     </prism:VisualStateAwarePage.BottomAppBar>
-    
+
     <Grid>
         <Pivot Title="プロコン2015" Margin="0,-1,0,1" SelectedIndex="{Binding Path=SelectedIndex,Mode=TwoWay}">
             <PivotItem Header="ホーム" Margin="10,0,10,0">
@@ -99,12 +98,13 @@
                                     <ColumnDefinition Width="110"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="会場フォト" Grid.Column="0" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="24" TextWrapping="Wrap" HorizontalAlignment="Left" Width="190"/>
-                                <Button Content="全て表示"  Grid.Column="2" FontSize="18" VerticalAlignment="Top" Margin="-12" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="Photo" BorderThickness="0"/>
+                                <Button Content="全て表示"  Grid.Column="2" FontSize="18" VerticalAlignment="Top" Margin="-12" HorizontalAlignment="Right" Command="{Binding NavigateCommand}" CommandParameter="PhotoList" BorderThickness="0"/>
                             </Grid>
-                            <TextBlock Text="{Binding PhotoItem.Date}" Style="{ThemeResource HeaderTextBlockStyle}" HorizontalAlignment="Right" Foreground="Gray" FontSize="18" Margin="10,10,0,0" TextWrapping="Wrap"/>
-                            <Image Source="{Binding PhotoItem.URL}" Height="250"  Stretch="Uniform" Margin="0,-10,0,0" />
+                            <TextBlock Text="{Binding PhotoItem.Date}" Style="{ThemeResource HeaderTextBlockStyle}" HorizontalAlignment="Left" Foreground="Gray" FontSize="18" Margin="0,10,0,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5"/>
+                            <Button Height="250" BorderThickness="0"  Margin="5,-10,0,0" Width="355" >
+                                <Image Source="{Binding PhotoItem.URL}" Stretch="Uniform" />
+                            </Button>
                             <TextBlock Text="{Binding PhotoItem.Title}" Style="{ThemeResource HeaderTextBlockStyle}" TextAlignment="Center"  FontSize="18" TextWrapping="Wrap" Margin="0,0,-0.333,0"/>
-
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>
@@ -120,8 +120,8 @@
                                     <ColumnDefinition Width="52"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Margin="5" Source="{Binding IconURL}" VerticalAlignment="Top" />
-                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin ="2,0,0,0">
+                                <Image  Grid.Column="0" Margin="5" Source="{Binding IconURL}" VerticalAlignment="Top" />
+                                <StackPanel Orientation="Vertical"  Grid.Column="1" Margin ="2,0,0,0">
                                     <Grid HorizontalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -138,9 +138,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </PivotItem>
         </Pivot>
-
     </Grid>
 </prism:VisualStateAwarePage>
