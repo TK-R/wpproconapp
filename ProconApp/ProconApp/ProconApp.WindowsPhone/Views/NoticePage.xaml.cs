@@ -22,9 +22,9 @@ namespace ProconApp.Views
     /// <summary>
     /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
     /// </summary>
-    public sealed partial class NotifyPage : VisualStateAwarePage
+    public sealed partial class NoticePage : VisualStateAwarePage
     {
-        public NotifyPage()
+        public NoticePage()
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutoWireViewModel(this, true);

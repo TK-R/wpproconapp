@@ -214,7 +214,7 @@ namespace ProconApp.ViewModels
                     this.navigationService.Navigate("NotifyConfig", null);
                     break;
                 case NavigateEnum.Notice:
-                    this.navigationService.Navigate("Notify", null);
+                    this.navigationService.Navigate("Notice", null);
                     break;
                 case NavigateEnum.GameResult:
                     break;

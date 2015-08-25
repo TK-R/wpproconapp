@@ -90,7 +90,7 @@
     <Compile Include="Models\NotifyConfig.cs" />
     <Compile Include="ViewModels\NotifyConfigPageViewModel.cs" />
     <Compile Include="Models\Social.cs" />
-    <Compile Include="ViewModels\NotifyPageViewModel.cs" />
+    <Compile Include="ViewModels\NoticePageViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -100,8 +100,8 @@
     <Compile Include="Views\NotifyConfigPage.xaml.cs">
       <DependentUpon>NotifyConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NotifyPage.xaml.cs">
-      <DependentUpon>NotifyPage.xaml</DependentUpon>
+    <Compile Include="Views\NoticePage.xaml.cs">
+      <DependentUpon>NoticePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +175,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NotifyPage.xaml">
+    <Page Include="Views\NoticePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
