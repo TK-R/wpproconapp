@@ -176,8 +176,6 @@ namespace ProconApp.ViewModels
         }
 
         #region NavigateCommand
-
-
         public enum NavigateEnum
         {
             Setting,
