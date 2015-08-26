@@ -14,7 +14,7 @@
 
     <Grid>
         <TextBlock Text="お知らせ" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,21,39,0" Height="37" VerticalAlignment="Top"/>
-        <ListView HorizontalAlignment="Right" Margin="0,81,10,0"
+        <ListView x:Name="ListView"  HorizontalAlignment="Right" Margin="0,81,10,0"
                                     ItemsSource="{Binding NoticeItemList}" Height="549" VerticalAlignment="Top" Width="371" SelectedItem="{Binding Path=SelectedItem,Mode=TwoWay}" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -23,7 +23,7 @@
             </ListView.ItemContainerStyle>
             <i:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="SelectionChanged">
-                    <core:InvokeCommandAction Command="{Binding NavigateCommand}"/>
+                    <core:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=ListView, Path=SelectedItem}"/>
                 </core:EventTriggerBehavior>
             </i:Interaction.Behaviors>
             <ListView.ItemTemplate>

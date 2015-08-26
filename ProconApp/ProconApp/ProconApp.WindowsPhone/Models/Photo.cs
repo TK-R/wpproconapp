@@ -14,12 +14,8 @@ namespace ProconApp.Models
     /// </summary>
     public class Photo
     {
-        public class PhotoItem
+        public class PhotoItem : SummaryItem
         {
-            /// <summary>
-            /// タイトル
-            /// </summary>
-            public string Title { get; set; }
             /// <summary>
             /// URL
             /// </summary>
@@ -28,10 +24,6 @@ namespace ProconApp.Models
             /// オリジナルURL
             /// </summary>
             public string OriginalURL { get; set; }
-            /// <summary>
-            /// 作成日
-            /// </summary>
-            public string Date { get; set; }
         }
 
         /// <summary>
@@ -45,6 +37,7 @@ namespace ProconApp.Models
             var result = photoData
                 .Select(photo => new PhotoItem
                 {
+                    Id = photo.id,
                     Title = photo.title,
                     URL = photo.thumbnail_url,
                     OriginalURL = photo.original_url,

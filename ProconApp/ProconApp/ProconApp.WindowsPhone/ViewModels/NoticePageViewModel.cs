@@ -17,11 +17,11 @@ namespace ProconApp.ViewModels
     {
         #region NoticeItemList
 
-        private ObservableCollection<Notice.NoticeSummaryItem> noticeItemList = new ObservableCollection<Notice.NoticeSummaryItem>();
+        private ObservableCollection<SummaryItem> noticeItemList = new ObservableCollection<SummaryItem>();
         /// <summary>
         /// お知らせ一覧に表示されるList
         /// </summary>
-        public ObservableCollection<Notice.NoticeSummaryItem> NoticeItemList
+        public ObservableCollection<SummaryItem> NoticeItemList
         {
             get { return this.noticeItemList; }
             set { this.SetProperty(ref noticeItemList, value); }
@@ -29,26 +29,15 @@ namespace ProconApp.ViewModels
 
         #endregion
 
-        #region SelectedItem
-
-        private Notice.NoticeSummaryItem selectedItem = null;
-        public Notice.NoticeSummaryItem SelectedItem
-        {
-            get { return this.selectedItem; }
-            set { this.SetProperty(ref selectedItem, value); }
-        }
-
-        #endregion
-
         #region NavigateCommand
 
-        private ICommand navigateCommand;
+        private DelegateCommand<SummaryItem> navigateCommand;
         /// <summary>
         /// ViewにバインドされるNavigateCommand
         /// </summary>
-        public ICommand NavigateCommand
+        public DelegateCommand<SummaryItem> NavigateCommand
         {
-            get { return this.navigateCommand ?? (this.navigateCommand = new DelegateCommand(Navigate)); }
+            get { return this.navigateCommand ?? (this.navigateCommand = new DelegateCommand<SummaryItem>(Navigate)); }
         }
 
         #endregion
@@ -57,12 +46,12 @@ namespace ProconApp.ViewModels
         {
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
-            NoticeItemList = new ObservableCollection<Notice.NoticeSummaryItem>(await Notice.getNotices(0, 20));
+            NoticeItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 20));
         }
 
-        protected void Navigate()
+        protected void Navigate(SummaryItem item)
         {
-            // TODO: SelectedItem.Id;
+            // TODO: item
         }
     }
 }
