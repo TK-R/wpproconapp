@@ -15,16 +15,6 @@ namespace ProconApp.Models
     public class Notice
     {
         /// <summary>
-        /// お知らせ一覧ページに表示されるアイテム
-        /// </summary>
-        public class NoticeSummaryItem : SummaryItem
-        {
-            /// <summary>
-            /// ID
-            /// </summary>
-            public int Id { get; set; }
-        }
-        /// <summary>
         /// お知らせページに表示されるアイテム
         /// </summary>
         public class NoticeItem : SummaryItem
@@ -38,13 +28,13 @@ namespace ProconApp.Models
         /// <summary>
         /// お知らせ概要
         /// </summary>
-        public static async Task<IEnumerable<NoticeSummaryItem>> getNotices(int page, int count = 3)
+        public static async Task<IEnumerable<SummaryItem>> getNotices(int page, int count = 3)
         {
             var notices = JsonConvert.DeserializeObject<List<NoticeListObject>>(await APIManager.NoticeList(page, count));
 
             var result = notices
                 .Select(notice =>
-                    new NoticeSummaryItem
+                    new SummaryItem
                     {
                         Id = notice.id,
                         Date = DateTimeHelper.DiffTimeString(notice.published_at, DateTime.UtcNow),

@@ -41,11 +41,11 @@ namespace ProconApp.ViewModels
 
         #region NoticeItemList
 
-        private ObservableCollection<Notice.NoticeSummaryItem> noticeItemList = new ObservableCollection<Notice.NoticeSummaryItem>();
+        private ObservableCollection<SummaryItem> noticeItemList = new ObservableCollection<SummaryItem>();
         /// <summary>
         /// お知らせ一覧に表示されるList
         /// </summary>
-        public ObservableCollection<Notice.NoticeSummaryItem> NoticeItemList
+        public ObservableCollection<SummaryItem> NoticeItemList
         {
             get { return this.noticeItemList; }
             set { this.SetProperty(ref noticeItemList, value); }
@@ -127,7 +127,7 @@ namespace ProconApp.ViewModels
         {
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
-                NoticeItemList = new ObservableCollection<Notice.NoticeSummaryItem>(await Notice.getNotices(0, 3));
+                NoticeItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 3));
                 ResultItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
                 PhotoItem = (await Photo.getPhotos(1)).FirstOrDefault();
                 return;
@@ -177,27 +177,6 @@ namespace ProconApp.ViewModels
 
         #region NavigateCommand
 
-        public class NavigateCommandClass : System.Windows.Input.ICommand
-        {
-            private Action<NavigateEnum> action;
-            public NavigateCommandClass(Action<NavigateEnum> action)
-            {
-                this.action = action;
-            }
-
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-                action.Invoke((NavigateEnum)Enum.Parse(typeof(NavigateEnum), (string)parameter));
-            }
-        }
-
 
         public enum NavigateEnum
         {
@@ -208,14 +187,13 @@ namespace ProconApp.ViewModels
             Map,
             Program
         }
-
-        private NavigateCommandClass navigateCommand;
+        private DelegateCommand<string> navigateCommand;
         /// <summary>
         /// ViewにバインドされるNavigateCommand
         /// </summary>
-        public NavigateCommandClass NavigateCommand
+        public DelegateCommand<string> NavigateCommand
         {
-            get { return this.navigateCommand ?? (this.navigateCommand = new NavigateCommandClass(Navigate)); }
+            get { return this.navigateCommand ?? (this.navigateCommand = new DelegateCommand<string>(Navigate)); }
         }
 
         #endregion
@@ -225,15 +203,17 @@ namespace ProconApp.ViewModels
         /// <summary>
         /// 画面の呼び出しを行う
         /// </summary>
-        protected void Navigate(NavigateEnum param)
+        protected void Navigate(string parameter)
         {
+            var param = (NavigateEnum)Enum.Parse(typeof(NavigateEnum), parameter);
+
             switch (param)
             {
                 case NavigateEnum.Setting:
                     this.navigationService.Navigate("NotifyConfig", null);
                     break;
                 case NavigateEnum.Notice:
-                    this.navigationService.Navigate("Notify", null);
+                    this.navigationService.Navigate("Notice", null);
                     break;
                 case NavigateEnum.GameResult:
                     break;

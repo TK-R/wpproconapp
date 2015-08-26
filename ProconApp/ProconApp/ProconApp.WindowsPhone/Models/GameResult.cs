@@ -22,6 +22,7 @@ namespace ProconApp.Models
                 .Select(gr =>
                     new SummaryItem
                     {
+                        Id = gr.id,
                         Date = DateTimeHelper.DiffTimeString(gr.finished_at, DateTime.UtcNow),
                         Title = gr.title
                     }

@@ -1,10 +1,12 @@
 ﻿<prism:VisualStateAwarePage
-    x:Class="ProconApp.Views.NotifyPage"
+    x:Class="ProconApp.Views.NoticePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ProconApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:prism="using:Microsoft.Practices.Prism.StoreApps"
     xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     mc:Ignorable="d"   
@@ -12,13 +14,18 @@
 
     <Grid>
         <TextBlock Text="お知らせ" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,21,39,0" Height="37" VerticalAlignment="Top"/>
-        <ListView HorizontalAlignment="Right" Margin="0,81,10,0"
-                                    ItemsSource="{Binding NoticeItemList}" Height="549" VerticalAlignment="Top" Width="371">
+        <ListView x:Name="ListView"  HorizontalAlignment="Right" Margin="0,81,10,0"
+                                    ItemsSource="{Binding NoticeItemList}" Height="549" VerticalAlignment="Top" Width="371" SelectedItem="{Binding Path=SelectedItem,Mode=TwoWay}" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment"  Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
+            <i:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="SelectionChanged">
+                    <core:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=ListView, Path=SelectedItem}"/>
+                </core:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="22" Margin="-2" HorizontalAlignment="Stretch" >
