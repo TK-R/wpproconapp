@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="domain" xml:space="preserve">
-    <value />
+    <value>https://&lt;&lt;proconapp-serverのドメイン&gt;&gt;/api</value>
   </data>
   <data name="endpoint" xml:space="preserve">
-    <value />
+    <value>AzureNotificationHubの接続文字列。初期設定だとDefaultListenSharedAccessSignatureの接続文字列</value>
   </data>
   <data name="hubname" xml:space="preserve">
-    <value />
+    <value>AzureNotificationHubのNamespace</value>
   </data>
   <data name="programurl" xml:space="preserve">
-    <value />
+    <value>プログラムHTMLのURL</value>
   </data>
   <data name="routeurl" xml:space="preserve">
-    <value />
+    <value>アクセスHTMLのURL</value>
   </data>
 </root>
