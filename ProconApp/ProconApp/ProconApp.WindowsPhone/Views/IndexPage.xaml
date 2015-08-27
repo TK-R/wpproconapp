@@ -23,26 +23,36 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" FontSize="18" Text="{Binding Title}"/>
-                        <TextBlock Grid.Column="2" FontSize="18" Margin="10,0" TextAlignment="Right" Text="{Binding Date}"/>
+                        <TextBlock Grid.Column="0" FontSize="18" Margin="10,0" Text="{Binding Title}"/>
+                        <TextBlock Grid.Column="2" FontSize="18" Margin="10,0" TextWrapping="Wrap" TextAlignment="Right" Text="{Binding Date}"/>
                     </Grid>
                 </DataTemplate>
             </model:ItemSelector.SummaryTemplate>
             <model:ItemSelector.PhotoTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="0" VerticalAlignment="Top">
+                    <StackPanel Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding Date}" Style="{ThemeResource HeaderTextBlockStyle}" HorizontalAlignment="Left" Foreground="WhiteSmoke" FontSize="18" Margin="15,10,0,0" />
                         <Image Source="{Binding URL}" Height="200"  Stretch="Uniform" Margin="0,0,5,0" />
-                        <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}" TextAlignment="Center"  FontSize="18" TextWrapping="Wrap" Margin="0,0,0,0"/>
+                        <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}" TextAlignment="Center"  FontSize="18" />
                     </StackPanel>
                 </DataTemplate>
             </model:ItemSelector.PhotoTemplate>
         </model:ItemSelector>
     </prism:VisualStateAwarePage.Resources>
     <Grid>
-        <TextBlock Text="{Binding Name}" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,21,39,0" Height="37" VerticalAlignment="Top"/>
-        <ListView x:Name="ListView"  HorizontalAlignment="Right" Margin="0,81,10,0"
-                                    ItemsSource="{Binding ItemList}" ItemTemplateSelector="{StaticResource ListViewTemplateSelector}" Height="549" VerticalAlignment="Top" Width="371" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Style="{ThemeResource HeaderTextBlockStyle}" Margin="5,0" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button Content="全て表示" Grid.Column="2" Grid.Row="0" FontSize="18" Command="{Binding NavigateCommand}" BorderThickness="0" Visibility="{Binding Visibility}"/>
+        <ListView x:Name="ListView" HorizontalAlignment="Right" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"
+                                    ItemsSource="{Binding ItemList}" ItemTemplateSelector="{StaticResource ListViewTemplateSelector}" Width="371" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment"  Value="Stretch" />
@@ -50,7 +60,7 @@
             </ListView.ItemContainerStyle>
             <i:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="SelectionChanged">
-                    <core:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=ListView, Path=SelectedItem}"/>
+                    <core:InvokeCommandAction Command="{Binding ItemNavigateCommand}" CommandParameter="{Binding ElementName=ListView, Path=SelectedItem}"/>
                 </core:EventTriggerBehavior>
             </i:Interaction.Behaviors>
         </ListView>

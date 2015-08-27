@@ -39,30 +39,30 @@ namespace ProconApp.ViewModels
         static string ProgramUrl;
         #endregion
 
-        #region NoticeItemList
+        #region NoticeViewModel
 
-        private ObservableCollection<SummaryItem> noticeItemList = new ObservableCollection<SummaryItem>();
+        private IndexPageViewModel noticeViewModel;
         /// <summary>
         /// お知らせ一覧に表示されるList
         /// </summary>
-        public ObservableCollection<SummaryItem> NoticeItemList
+        public IndexPageViewModel NoticeViewModel
         {
-            get { return this.noticeItemList; }
-            set { this.SetProperty(ref noticeItemList, value); }
+            get { return this.noticeViewModel; }
+            set { this.SetProperty(ref noticeViewModel, value); }
         }
-        
+
         #endregion
 
-        #region ResultItemList
+        #region ResultViewModel
 
         /// <summary>
         /// 競技結果速報に表示されるList
         /// </summary>
-        private ObservableCollection<SummaryItem> resultItemList = new ObservableCollection<SummaryItem>();
-        public ObservableCollection<SummaryItem> ResultItemList
+        private IndexPageViewModel resultViewModel;
+        public IndexPageViewModel ResultViewModel
         {
-            get { return this.resultItemList; }
-            set { this.SetProperty(ref resultItemList, value); }
+            get { return this.resultViewModel; }
+            set { this.SetProperty(ref resultViewModel, value); }
         }
         
         #endregion
@@ -78,19 +78,19 @@ namespace ProconApp.ViewModels
             get { return this.socialItemList; }
             set { this.SetProperty(ref socialItemList, value); }
         }
-        
+
         #endregion
 
-        #region PhotoItem
+        #region PhotoViewModel
 
-        private Photo.PhotoItem photoItem;
+        private IndexPageViewModel photoViewModel;
         /// <summary>
         /// メインページに表示する画像
         /// </summary>
-        public Photo.PhotoItem PhotoItem
+        public IndexPageViewModel PhotoViewModel
         {
-            get { return photoItem; }
-            set { this.SetProperty(ref photoItem, value); }
+            get { return photoViewModel; }
+            set { this.SetProperty(ref photoViewModel, value); }
         }
         
         #endregion
@@ -127,9 +127,12 @@ namespace ProconApp.ViewModels
         {
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
-                NoticeItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 3));
-                ResultItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
-                PhotoItem = (await Photo.getPhotos(1)).FirstOrDefault();
+                NoticeViewModel = new IndexPageViewModel(this.navigationService);
+                NoticeViewModel.setIndex(NavigateEnum.Notice);
+                ResultViewModel = new IndexPageViewModel(this.navigationService);
+                ResultViewModel.setIndex(NavigateEnum.GameResult);
+                PhotoViewModel = new IndexPageViewModel(this.navigationService);
+                PhotoViewModel.setIndex(NavigateEnum.PhotoList);
                 return;
             }
             else if(SelectedIndex == (int)MainPageEnum.Social)
@@ -199,11 +202,6 @@ namespace ProconApp.ViewModels
             {
                 case NavigateEnum.Setting:
                     this.navigationService.Navigate("NotifyConfig", null);
-                    break;
-                case NavigateEnum.Notice:
-                case NavigateEnum.GameResult:
-                case NavigateEnum.PhotoList:
-                    this.navigationService.Navigate("Index", param);
                     break;
                 case NavigateEnum.Map:
                     this.navigationService.Navigate("Web", RouteUrl);
