@@ -14,11 +14,11 @@ namespace ProconApp.ViewModels
     {
         #region PhotoULR
 
-        private string photoUrl;
-        public string PhotoURL
+        private Photo.PhotoItem photo;
+        public Photo.PhotoItem Photo
         {
-            set { this.SetProperty(ref photoUrl, value); }
-            get { return photoUrl; }
+            set { this.SetProperty(ref photo, value); }
+            get { return photo; }
         }
 
         #endregion
@@ -28,7 +28,7 @@ namespace ProconApp.ViewModels
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
 
-            PhotoURL = navigationParameter as string;
+            Photo = navigationParameter as Photo.PhotoItem;
         }
     }
 }

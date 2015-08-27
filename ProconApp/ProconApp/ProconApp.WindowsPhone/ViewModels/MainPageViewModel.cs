@@ -176,15 +176,7 @@ namespace ProconApp.ViewModels
         }
 
         #region NavigateCommand
-        public enum NavigateEnum
-        {
-            Setting,
-            Notice,
-            GameResult,
-            PhotoList,
-            Map,
-            Program
-        }
+
         private DelegateCommand<string> navigateCommand;
         /// <summary>
         /// ViewにバインドされるNavigateCommand
@@ -195,8 +187,6 @@ namespace ProconApp.ViewModels
         }
 
         #endregion
-
-        
 
         /// <summary>
         /// 画面の呼び出しを行う
@@ -211,18 +201,14 @@ namespace ProconApp.ViewModels
                     this.navigationService.Navigate("NotifyConfig", null);
                     break;
                 case NavigateEnum.Notice:
-                    this.navigationService.Navigate("Notice", null);
-                    break;
                 case NavigateEnum.GameResult:
-                    break;
                 case NavigateEnum.PhotoList:
-                    this.navigationService.Navigate("PhotoList", null);
+                    this.navigationService.Navigate("Index", param);
                     break;
                 case NavigateEnum.Map:
                     this.navigationService.Navigate("Web", RouteUrl);
                     break;
                 case NavigateEnum.Program:
-                    
                     this.navigationService.Navigate("Web", ProgramUrl);
                     break;
                 default:
@@ -230,6 +216,15 @@ namespace ProconApp.ViewModels
             }
         }
 
+    }
+    public enum NavigateEnum
+    {
+        Setting,
+        Notice,
+        GameResult,
+        PhotoList,
+        Map,
+        Program
     }
 
 }

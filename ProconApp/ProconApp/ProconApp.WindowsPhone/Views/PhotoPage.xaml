@@ -10,6 +10,6 @@
     mc:Ignorable="d"   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid >
-        <Image HorizontalAlignment="Left" Source="{Binding PhotoURL}" Stretch="Uniform" Height="640" VerticalAlignment="Top" Width="400"/>
+        <Image HorizontalAlignment="Left" Source="{Binding Path=Photo.OriginalURL}" Stretch="Uniform" Height="640" VerticalAlignment="Top" Width="400"/>
     </Grid>
 </prism:VisualStateAwarePage>
