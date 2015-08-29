@@ -120,12 +120,6 @@
   <data name="domain" xml:space="preserve">
     <value>https://&lt;&lt;proconapp-serverのドメイン&gt;&gt;/api</value>
   </data>
-  <data name="endpoint" xml:space="preserve">
-    <value>AzureNotificationHubの接続文字列。初期設定だとDefaultListenSharedAccessSignatureの接続文字列</value>
-  </data>
-  <data name="hubname" xml:space="preserve">
-    <value>AzureNotificationHubのNamespace</value>
-  </data>
   <data name="programurl" xml:space="preserve">
     <value>プログラムHTMLのURL</value>
   </data>

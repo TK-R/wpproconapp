@@ -66,35 +66,14 @@ namespace ProconApp
             // APIManagerの初期化処理
             await APIManager.Initialize();
 
-            // 通知ハブからuriを取得していない（初回起動時）のみ実行
-            string uri = ApplicationData.Current.LocalSettings.Values["Ch-Uri"] as string;
-            if (uri != null)
-                return;
-
             // リソースファイルから通知ハブに関するパラメータを取得
             var resLoader = ResourceLoader.GetForCurrentView("Resources");
-            var endppoint = resLoader.GetString("endpoint");
-            var hubname = resLoader.GetString("hubname");
 
             var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-            var hub = new NotificationHub(hubname, endppoint);
 
-            var result = await hub.RegisterNativeAsync(channel.Uri);
+            var res = APIManager.PushDeviceSet(channel.Uri.ToString());
+            Debug.WriteLine(res.ToString());
 
-            Debug.WriteLine(channel.Uri.ToString());
-
-
-            // 通知ハブに接続成功時 
-            if (result.RegistrationId != null)
-            {
-                /* ページ表示時に、トークン取得済みでなければ取得処理を実行 */
-                string tkn = ApplicationData.Current.LocalSettings.Values["Token"] as string;
-
-                var res = APIManager.PushDeviceSet(channel.Uri.ToString());
-                Debug.WriteLine(res.ToString());
-
-                ApplicationData.Current.LocalSettings.Values["Ch-Uri"] = channel.Uri.ToString();
-            }
         }
     }
 }
