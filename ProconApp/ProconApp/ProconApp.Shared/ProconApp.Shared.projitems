@@ -18,13 +18,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\AnalyticHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\DateTimeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HTMLHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Resources_sample.resw">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </PRIResource>
     <PRIResource Include="$(MSBuildThisFileDirectory)Resources.resw">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </PRIResource>

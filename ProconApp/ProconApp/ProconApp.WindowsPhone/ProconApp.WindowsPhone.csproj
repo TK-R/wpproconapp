@@ -124,6 +124,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="analytics.xml" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\Logo.scale-140.png" />
     <Content Include="Assets\Logo.scale-240.png" />
@@ -142,9 +143,20 @@
     <Content Include="Assets\WideLogo.scale-100.png" />
     <Content Include="Assets\WideLogo.scale-140.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
+    <None Include="analytics.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GoogleAnalytics, Version=1.3.0.30472, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.3.00\lib\wpa81\GoogleAnalytics.winmd</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GoogleAnalytics.Core, Version=1.3.0.30469, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\GoogleAnalyticsSDK.1.3.00\lib\wpa81\GoogleAnalytics.Core.winmd</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism.Mvvm, Version=1.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.Mvvm.1.1.1\lib\wpa81\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
       <Private>True</Private>

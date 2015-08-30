@@ -197,3 +197,7 @@ FakesAssemblies/
 
 # Resource file
 Resources.resw
+
+# Analytics file
+analytics.xml
+

@@ -133,11 +133,17 @@ namespace ProconApp.ViewModels
                 ResultViewModel.setIndex(NavigateEnum.GameResult);
                 PhotoViewModel = new IndexPageViewModel(this.navigationService);
                 PhotoViewModel.setIndex(NavigateEnum.PhotoList);
+
+                // GoogleAnalyticsに情報を送信（Home）
+                AnalyticHelper.SendGAnalytics(AnalyticHelper.ViewParam.Home);
                 return;
             }
             else if(SelectedIndex == (int)MainPageEnum.Social)
             {
                 SocialItemList = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
+            
+                // GoogleAnalyticsに情報を送信（Social）
+                AnalyticHelper.SendGAnalytics(AnalyticHelper.ViewParam.Social);
                 return;
             }
         }
