@@ -153,7 +153,9 @@ namespace ProconApp.ViewModels
             switch (this.PageType)
             {
                 case NavigateEnum.Notice:
-                    // WebView
+                    // NoticeView
+                    this.navigationService.Navigate("Notice", item);
+
                     break;
                 case NavigateEnum.GameResult:
                     // 詳細？
