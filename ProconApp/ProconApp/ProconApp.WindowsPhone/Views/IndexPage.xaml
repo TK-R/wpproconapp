@@ -21,10 +21,10 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" FontSize="18" Margin="10,0" Text="{Binding Title}"/>
-                        <TextBlock Grid.Column="2" FontSize="18" Margin="10,0" TextWrapping="Wrap" TextAlignment="Right" Text="{Binding Date}"/>
+                        <TextBlock Grid.Column="0" FontSize="18" Text="{Binding Title}" TextAlignment="Left" />
+                        <TextBlock Grid.Column="2" FontSize="18" TextWrapping="Wrap" Margin="0,0,0,-10" TextAlignment="Right" Text="{Binding Date}"/>
                     </Grid>
                 </DataTemplate>
             </model:ItemSelector.SummaryTemplate>
@@ -37,22 +37,62 @@
                     </StackPanel>
                 </DataTemplate>
             </model:ItemSelector.PhotoTemplate>
+            <model:ItemSelector.GameResultTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid Height="24" Margin="0,5" HorizontalAlignment="Stretch" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontSize="20" Margin="0,0" Text="{Binding Title}"/>
+                            <TextBlock Grid.Column="2" FontSize="16" Margin="0,0,10,0" TextAlignment="Right" Text="{Binding Date}"/>
+                        </Grid>
+                        <ListView ItemsSource="{Binding ResultList}" 
+                                  Width="350" Margin="0,15,0,0"  Height="Auto">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment"  Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="24" Margin="0,0,0,0" HorizontalAlignment="Stretch"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontSize="16" Text="{Binding Rank}"/>
+                                        <TextBlock Grid.Column="2" FontSize="16" TextAlignment="Left" Text="{Binding Name}"/>
+                                        <TextBlock Grid.Column="4" FontSize="16" TextAlignment="Right" Text="{Binding Score}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </DataTemplate>
+            </model:ItemSelector.GameResultTemplate>
         </model:ItemSelector>
     </prism:VisualStateAwarePage.Resources>
-    <Grid>
+    <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" MinWidth="10"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="120"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="148*" />
+            <RowDefinition Height="143*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Style="{ThemeResource HeaderTextBlockStyle}" Margin="5,0" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Button Content="全て表示" Grid.Column="2" Grid.Row="0" FontSize="18" Command="{Binding NavigateCommand}" BorderThickness="0" Visibility="{Binding Visibility}"/>
-        <ListView x:Name="ListView" HorizontalAlignment="Right" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"
-                                    ItemsSource="{Binding ItemList}" ItemTemplateSelector="{StaticResource ListViewTemplateSelector}" Width="371" >
+        <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Style="{ThemeResource HeaderTextBlockStyle}" Margin="0,0" FontSize="32" TextWrapping="Wrap" VerticalAlignment="Top" Height="45"/>
+        <Button Content="全て表示" Grid.Column="2" Grid.Row="0" FontSize="18" Command="{Binding NavigateCommand}" BorderThickness="0" Visibility="{Binding Visibility}" Height="58" Width="Auto" HorizontalContentAlignment="Right" />
+            <ListView x:Name="ListView" Grid.Column="0" Grid.ColumnSpan="3"
+                                    ItemsSource="{Binding ItemList}" ItemTemplateSelector="{StaticResource ListViewTemplateSelector}" Margin="10,57,10,10" Grid.RowSpan="3" HorizontalAlignment="Right" Width="360" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment"  Value="Stretch" />

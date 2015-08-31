@@ -4,10 +4,13 @@ using Windows.ApplicationModel.Activation;
 using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
+#if WINDOWS_PHONE_APP
 using ProconApp.ViewModels;
 using ProconApp.Views;
-using ProconAPI;
+#endif
 
+using ProconAPI;
 using Windows.Networking.PushNotifications;
 using Microsoft.WindowsAzure.Messaging;
 using Windows.UI.Popups;

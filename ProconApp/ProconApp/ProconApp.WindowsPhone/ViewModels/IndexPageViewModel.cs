@@ -106,7 +106,7 @@ namespace ProconApp.ViewModels
                     break;
                 case NavigateEnum.GameResult:
                     Name = "競技結果";
-                    ItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(20));
+                    ItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResultItems(20));
                     break;
                 case NavigateEnum.PhotoList:
                     Name = "会場フォト";

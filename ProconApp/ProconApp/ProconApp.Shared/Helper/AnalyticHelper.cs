@@ -1,5 +1,4 @@
-﻿using ProconApp.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,8 +19,10 @@ namespace ProconApp
         /// <param name="param"></param>
         public static void SendGAnalytics(ViewParam param)
         {
+#if WINDOWS_PHONE_APP
             var sendString = Enum.GetName(typeof(ViewParam), param);
             GoogleAnalytics.EasyTracker.GetTracker().SendView(sendString);
+#endif
         }
     }
 }

@@ -129,8 +129,10 @@ namespace ProconApp.ViewModels
             {
                 NoticeViewModel = new IndexPageViewModel(this.navigationService);
                 NoticeViewModel.setIndex(NavigateEnum.Notice);
+                
                 ResultViewModel = new IndexPageViewModel(this.navigationService);
                 ResultViewModel.setIndex(NavigateEnum.GameResult);
+
                 PhotoViewModel = new IndexPageViewModel(this.navigationService);
                 PhotoViewModel.setIndex(NavigateEnum.PhotoList);
 
