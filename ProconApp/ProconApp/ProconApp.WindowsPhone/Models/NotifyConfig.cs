@@ -43,7 +43,7 @@ namespace ProconApp.Models
             foreach (var p in players)
             {
                 // サーバ側に登録されていれば、スイッチをONにする。
-                var item = new NotifyConfigItem { SchoolName = p.name, ID = p.id };
+                var item = new NotifyConfigItem { SchoolName = p.short_name, ID = p.id };
                 item.NotifyFlag = notifyList.ids.Any(n => n == item.ID);
                 yield return item;
             }
