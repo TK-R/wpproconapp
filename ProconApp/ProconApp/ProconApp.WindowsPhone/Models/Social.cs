@@ -26,6 +26,10 @@ namespace ProconApp.Models
             /// </summary>
             public string ScreenName { get; set; }
             /// <summary>
+            /// TweetのID
+            /// </summary>
+            public string TweeetID { get; set; }
+            /// <summary>
             /// Name
             /// </summary>
             public string Name { get; set; }
@@ -50,7 +54,8 @@ namespace ProconApp.Models
                     Name = status.user.name,
                     ScreenName = "@" + status.user.screen_name,
                     IconURL = status.user.profile_image_url,
-                    Date = DateTimeHelper.DiffTimeString(DateTimeHelper.FromTweetTime(status.created_at), DateTime.UtcNow)
+                    Date = DateTimeHelper.DiffTimeString(DateTimeHelper.FromTweetTime(status.created_at), DateTime.UtcNow),
+                    TweeetID = status.id_str
                 });
             return result;
         }

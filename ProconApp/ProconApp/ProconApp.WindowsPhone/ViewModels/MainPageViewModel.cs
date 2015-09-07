@@ -198,6 +198,25 @@ namespace ProconApp.ViewModels
         }
 
         #endregion
+      
+        #region ItemNavigateCommand
+
+        private DelegateCommand<Social.SocialItem> itemNavigateCommand;
+        /// <summary>
+        /// ListViewItemにバインドされるItemNavigateCommand
+        /// </summary>
+        public DelegateCommand<Social.SocialItem> ItemNavigateCommand
+        {
+            get { return this.itemNavigateCommand ?? (this.itemNavigateCommand = new DelegateCommand<Social.SocialItem>(Navigate)); }
+        }
+
+        #endregion
+
+        protected void Navigate(Social.SocialItem item)
+        {
+            var url = "https://twitter.com/" + item.ScreenName.Remove(0,1) + "/status/" + item.TweeetID;
+            this.navigationService.Navigate("Web", url);
+        }
 
         /// <summary>
         /// 画面の呼び出しを行う

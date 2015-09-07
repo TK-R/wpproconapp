@@ -19,7 +19,7 @@ namespace ProconApp.Models
         public class Result
         {
             public string Name { get; set; }
-            public int Rank { get; set; }
+            public string Rank { get; set; }
             public string Score { get; set; }
 
         }
@@ -66,7 +66,7 @@ namespace ProconApp.Models
                             new Result
                             {
                                 Name = p.player.name,
-                                Rank = p.rank,
+                                Rank = p.rank + "位",
                                 Score = p.score + " zk"
                             }).ToList())
                     }
