@@ -65,7 +65,7 @@ namespace ProconApp.Models
                         .Select(p =>
                             new Result
                             {
-                                Name = p.player.name,
+                                Name = p.player.short_name,
                                 Rank = p.rank + "位",
                                 Score = p.score + " zk"
                             }).ToList())

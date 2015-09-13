@@ -42,13 +42,13 @@
             <model:ItemSelector.GameResultTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Grid Height="26" Margin="0,5" HorizontalAlignment="Stretch" >
+                        <Grid Height="27" Margin="0,5" HorizontalAlignment="Stretch" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" FontSize="22" Margin="0,0" Text="{Binding Title}"/>
+                            <TextBlock Grid.Column="0" FontSize="24" Margin="0,0" Text="{Binding Title}"/>
                             <TextBlock Grid.Column="2" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding Date}"/>
                         </Grid>
                         <ListView ItemsSource="{Binding ResultList}" 
@@ -60,7 +60,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Height="24" Margin="10,0,0,0" HorizontalAlignment="Stretch"  >
+                                    <Grid Height="24" Margin="10,0,30,0" HorizontalAlignment="Stretch"  >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="10"/>
@@ -68,9 +68,9 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" FontSize="16" Text="{Binding Rank}"/>
-                                        <TextBlock Grid.Column="2" FontSize="16" TextAlignment="Left" Text="{Binding Name}"/>
-                                        <TextBlock Grid.Column="4" FontSize="16" TextAlignment="Right" Text="{Binding Score}"/>
+                                        <TextBlock Grid.Column="0" FontSize="20" Text="{Binding Rank}"/>
+                                        <TextBlock Grid.Column="2" FontSize="20" TextAlignment="Left" Text="{Binding Name}"/>
+                                        <TextBlock Grid.Column="4" FontSize="20" TextAlignment="Right" Text="{Binding Score}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
