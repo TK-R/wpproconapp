@@ -102,15 +102,8 @@ namespace ProconApp.ViewModels
         public int SelectedIndex
         {
             get { return selectedIndex; }
-            set
-            {
-                if (this.SetProperty(ref selectedIndex, value))
-                {
-                    update();
-                }
-            }
+            set { this.SetProperty(ref selectedIndex, value); }
         }
-
         #endregion
 
         #region MainPageEnum
@@ -125,29 +118,28 @@ namespace ProconApp.ViewModels
 
         public async Task update()
         {
+            NoticeViewModel = new IndexPageViewModel(this.navigationService);
+            NoticeViewModel.setIndex(NavigateEnum.Notice);
+
+            ResultViewModel = new IndexPageViewModel(this.navigationService);
+            ResultViewModel.setIndex(NavigateEnum.GameResult);
+
+            PhotoViewModel = new IndexPageViewModel(this.navigationService);
+            PhotoViewModel.setIndex(NavigateEnum.PhotoList);
+
+            SocialItemList = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
+
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
-                NoticeViewModel = new IndexPageViewModel(this.navigationService);
-                NoticeViewModel.setIndex(NavigateEnum.Notice);
-                
-                ResultViewModel = new IndexPageViewModel(this.navigationService);
-                ResultViewModel.setIndex(NavigateEnum.GameResult);
-
-                PhotoViewModel = new IndexPageViewModel(this.navigationService);
-                PhotoViewModel.setIndex(NavigateEnum.PhotoList);
-
                 // GoogleAnalyticsに情報を送信（Home）
                 AnalyticHelper.SendGAnalytics(AnalyticHelper.ViewParam.Home);
-                return;
             }
-            else if(SelectedIndex == (int)MainPageEnum.Social)
+            else
             {
-                SocialItemList = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
-            
                 // GoogleAnalyticsに情報を送信（Social）
                 AnalyticHelper.SendGAnalytics(AnalyticHelper.ViewParam.Social);
-                return;
             }
+
         }
 
         /// <summary>
@@ -198,7 +190,20 @@ namespace ProconApp.ViewModels
         }
 
         #endregion
-      
+
+        #region RefreshCommand
+
+        private DelegateCommand refreshCommand;
+        /// <summary>
+        /// ViewniバインドされるRefreshCommand
+        /// </summary>
+        public DelegateCommand RefreshCommand
+        {
+            get { return this.refreshCommand ?? (this.refreshCommand = DelegateCommand.FromAsyncHandler(update)); }
+        }
+
+        #endregion
+
         #region ItemNavigateCommand
 
         private DelegateCommand<Social.SocialItem> itemNavigateCommand;

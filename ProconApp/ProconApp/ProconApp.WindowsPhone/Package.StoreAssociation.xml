@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
-  <Publisher>CN=EC32DDED-DD36-440D-B08E-69DAE4AAC168</Publisher>
-  <PublisherDisplayName>TK-R</PublisherDisplayName>
+  <Publisher>CN=AEAC0DF0-77A9-42FE-B620-2571AC3CA458</Publisher>
+  <PublisherDisplayName>高専プロコン</PublisherDisplayName>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />
@@ -184,13 +184,11 @@
     <Language Code="vi-vn" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>21046TK-R.wpproconm</MainPackageIdentityName>
+    <MainPackageIdentityName>101646E78A6D6.ProconAppWP</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>wpproconm</ReservedName>
+      <ReservedName>ProconAppWP</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames>
-    <MainPackageIdentityName>21046TK-R.WinMioPon</MainPackageIdentityName>
-  </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH1ZT47" />
+  <AccountPackageIdentityNames />
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH5X9H4" />
 </StoreAssociation>

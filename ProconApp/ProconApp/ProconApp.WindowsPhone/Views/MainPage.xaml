@@ -16,6 +16,7 @@
         <CommandBar Height="17">
             <AppBarButton Icon="Map" Command="{Binding NavigateCommand}" CommandParameter="Map" Label="アクセス"/>
             <AppBarButton Icon="Document" Command="{Binding NavigateCommand}" CommandParameter="Program" Label="プログラム"/>
+            <AppBarButton Icon="Refresh" Command="{Binding RefreshCommand}" Label="更新"/>
             <AppBarButton Icon="Setting" Command="{Binding NavigateCommand}" CommandParameter="Setting" Label="通知設定"/>
         </CommandBar>
     </prism:VisualStateAwarePage.BottomAppBar>
