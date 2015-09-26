@@ -62,7 +62,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto" MinWidth="50"/>
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="60" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" TextWrapping="NoWrap" TextTrimming="WordEllipsis" FontSize="17" Text="{Binding Name}"/>
                                         <TextBlock Grid.Column="1" TextWrapping="NoWrap" TextTrimming="WordEllipsis"  FontSize="14" Text="{Binding ScreenName}" Foreground="Gray" Margin="0,0,0,0" VerticalAlignment="Bottom"/>
