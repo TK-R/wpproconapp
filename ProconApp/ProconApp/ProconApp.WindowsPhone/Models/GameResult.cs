@@ -21,6 +21,8 @@ namespace ProconApp.Models
             public string Name { get; set; }
             public string Rank { get; set; }
             public string Score { get; set; }
+            public string Scores { get; set; }
+            public bool Advance { get; set; }
 
         }
 
@@ -58,7 +60,7 @@ namespace ProconApp.Models
                     {
                         Id = gr.id,
                         Title = gr.title,
-                        Date = "開始: " +  DateTimeHelper.FromUnixTime(gr.started_at).ToString("HH:mm") + " - " +
+                        Date = "開始: " + DateTimeHelper.FromUnixTime(gr.started_at).ToString("HH:mm") + " - " +
                                (gr.status == 1 ? "[試合中]" : "終了: " + DateTimeHelper.FromUnixTime(gr.finished_at).ToString("HH:mm")),
                         ResultList = new ObservableCollection<Result>(gr.result
                         .OrderBy(p => p.rank)
@@ -67,12 +69,13 @@ namespace ProconApp.Models
                             {
                                 Name = p.player.short_name,
                                 Rank = p.rank + "位",
-                                Score = p.score + " zk"
+                                Score = p.score + " zk",
+                                Scores = string.Join(" ",p.scores.Select((score, index)  => "問" + (index + 1) + ":" + (score != -1 ? score.ToString() : "×"))),
+                                Advance = p.advance
                             }).ToList())
                     }
                 );
             return resultItem;
-
         }
      }
 }

@@ -65,7 +65,9 @@ namespace ProconAPI
         {
             public PlayerObject player { get; set; }
             public int score { get; set; }
+            public int[] scores { get; set; }
             public int rank { get; set; }
+            public bool advance { get; set; }
         }
 
         public int id { get; set; }

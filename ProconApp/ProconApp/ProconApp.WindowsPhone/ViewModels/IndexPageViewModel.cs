@@ -12,9 +12,40 @@ using Windows.UI.Xaml.Navigation;
 
 using Microsoft.Practices.Prism.Commands;
 using System.Windows.Input;
+using Windows.UI.Xaml.Data;
+using System.Globalization;
+using Windows.UI.Text;
 
 namespace ProconApp.ViewModels
 {
+
+    #region Converter
+    public class BoldConverter : IValueConverter
+    {
+        public object Convert(object value, Type type, object parameter, string culture)
+        {
+            if (value is bool)
+                if ((bool)value)
+                    return FontWeights.Bold;
+                else
+                    return FontWeights.Normal;
+            else
+                return FontWeights.Normal;
+        }
+
+        public object ConvertBack(object value, Type type, object parameter, string culture)
+        {
+            if (value is FontWeight)
+                if (FontWeights.Equals(value, FontWeights.Bold))
+                    return true;
+                else
+                    return false;
+            else
+                return false;
+        }
+    }
+    #endregion
+
     public class IndexPageViewModel : ViewModel
     {
 
@@ -64,6 +95,7 @@ namespace ProconApp.ViewModels
 
         #endregion
 
+    
 
         public IndexPageViewModel(INavigationService navigationService)
         {

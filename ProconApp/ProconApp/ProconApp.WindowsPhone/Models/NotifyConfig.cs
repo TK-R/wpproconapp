@@ -57,7 +57,7 @@ namespace ProconApp.Models
         {
             foreach (var p in players)
             {
-                var item = new NotifyConfigItem { SchoolName = p.name, ID = p.id, NotifyFlag = true};
+                var item = new NotifyConfigItem { SchoolName = p.short_name, ID = p.id, NotifyFlag = true};
                 yield return item;
             }
         }

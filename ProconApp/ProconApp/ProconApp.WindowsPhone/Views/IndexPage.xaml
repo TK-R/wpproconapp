@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ProconApp.Views"
+    xmlns:vm="using:ProconApp.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -14,6 +15,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <prism:VisualStateAwarePage.Resources>
+        <vm:BoldConverter x:Key="BoldConverter"/>
         <model:ItemSelector x:Name="ListViewTemplateSelector" >
             <model:ItemSelector.SummaryTemplate>
                 <DataTemplate>
@@ -42,14 +44,14 @@
             <model:ItemSelector.GameResultTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Grid Height="27" Margin="0,5" HorizontalAlignment="Stretch" >
+                        <Grid Height="18" Margin="0,5,0,-3" HorizontalAlignment="Stretch" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" FontSize="24" Margin="0,0" Text="{Binding Title}"/>
-                            <TextBlock Grid.Column="2" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding Date}"/>
+                            <TextBlock Grid.Column="0" FontSize="16" Margin="0,0" Text="{Binding Title}"/>
+                            <TextBlock Grid.Column="2" FontSize="16" Margin="0,0,0,0" VerticalAlignment="Center" TextAlignment="Right" Text="{Binding Date}"/>
                         </Grid>
                         <ListView ItemsSource="{Binding ResultList}" 
                                   Width="350" Margin="0,15,0,0"  Height="Auto">
@@ -60,7 +62,7 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Height="24" Margin="10,0,30,0" HorizontalAlignment="Stretch"  >
+                                    <Grid Height="24" Margin="10,0,0,0" HorizontalAlignment="Stretch"  >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="10"/>
@@ -68,9 +70,12 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" FontSize="20" Text="{Binding Rank}"/>
-                                        <TextBlock Grid.Column="2" FontSize="20" TextAlignment="Left" Text="{Binding Name}"/>
-                                        <TextBlock Grid.Column="4" FontSize="20" TextAlignment="Right" Text="{Binding Score}"/>
+                                        <TextBlock Grid.Column="0" FontSize="20" Text="{Binding Rank}"
+                                                   FontWeight="{Binding Advance, Converter={StaticResource BoldConverter}}" />
+                                        <TextBlock Grid.Column="2" FontSize="20" TextAlignment="Left" Text="{Binding Name}"
+                                                   FontWeight="{Binding Advance, Converter={StaticResource BoldConverter}}" />
+                                        <TextBlock Grid.Column="4" FontSize="20" TextAlignment="Right" Text="{Binding Scores}"
+                                                   FontWeight="{Binding Advance, Converter={StaticResource BoldConverter}}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
