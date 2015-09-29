@@ -19,6 +19,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helper\AnalyticHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\DateTimeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HTMLHelper.cs" />
   </ItemGroup>

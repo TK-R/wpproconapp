@@ -16,9 +16,10 @@ using Windows.UI.Core;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Networking.Connectivity;
+using Windows.UI.Xaml.Data;
 
 namespace ProconApp.ViewModels
-{
+{        
 
     public class MainPageViewModel : ViewModel
     {
@@ -117,7 +118,16 @@ namespace ProconApp.ViewModels
 
         #endregion
 
-        public async void ItemUpdate()
+        #region Loading
+        private bool loading = false;
+        public bool Loading
+        {
+            get {return loading;}
+            set{this.SetProperty(ref loading, value);}
+        }
+        #endregion
+
+        public async Task ItemUpdate()
         {
             NoticeViewModel.setIndex(NavigateEnum.Notice);
             ResultViewModel.setIndex(NavigateEnum.GameResult);
@@ -147,10 +157,16 @@ namespace ProconApp.ViewModels
             var profile = NetworkInformation.GetInternetConnectionProfile();
 
             if (profile != null && profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
-                ItemUpdate();
+            {
+                Loading = true;
+                await ItemUpdate();
+                Loading = false;
+            }
             else
+            {
                 await new Windows.UI.Popups.MessageDialog("ネットワーク接続に失敗しました。接続状況を確認してください。").ShowAsync();
-
+            }
+                
         }
 
         /// <summary>

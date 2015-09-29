@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ProconApp.Views"
+    xmlns:hlp="using:ProconApp.Helper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -12,7 +13,10 @@
     mc:Ignorable="d"   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <prism:VisualStateAwarePage.BottomAppBar>
+    <prism:VisualStateAwarePage.Resources>
+        <hlp:VisiblityConverter x:Key="VisiblityConverter"/>
+    </prism:VisualStateAwarePage.Resources>
+        <prism:VisualStateAwarePage.BottomAppBar>
         <CommandBar Height="17">
             <AppBarButton Icon="Map" Command="{Binding NavigateCommand}" CommandParameter="Map" Label="アクセス"/>
             <AppBarButton Icon="Document" Command="{Binding NavigateCommand}" CommandParameter="Program" Label="プログラム"/>
@@ -78,5 +82,6 @@
                 </ListView>
             </PivotItem>
         </Pivot>
+        <ProgressBar Height="10" VerticalAlignment="Top" Visibility="{Binding Loading, Converter={StaticResource VisiblityConverter}}" IsIndeterminate="{Binding Loading}"/>
     </Grid>
 </prism:VisualStateAwarePage>

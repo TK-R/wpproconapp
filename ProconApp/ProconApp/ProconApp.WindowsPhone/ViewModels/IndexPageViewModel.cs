@@ -20,34 +20,6 @@ using Windows.Networking.Connectivity;
 
 namespace ProconApp.ViewModels
 {
-
-    #region Converter
-    public class BoldConverter : IValueConverter
-    {
-        public object Convert(object value, Type type, object parameter, string culture)
-        {
-            if (value is bool)
-                if ((bool)value)
-                    return FontWeights.Bold;
-                else
-                    return FontWeights.Normal;
-            else
-                return FontWeights.Normal;
-        }
-
-        public object ConvertBack(object value, Type type, object parameter, string culture)
-        {
-            if (value is FontWeight)
-                if (FontWeights.Equals(value, FontWeights.Bold))
-                    return true;
-                else
-                    return false;
-            else
-                return false;
-        }
-    }
-    #endregion
-
     public class IndexPageViewModel : ViewModel
     {
 
@@ -97,7 +69,15 @@ namespace ProconApp.ViewModels
 
         #endregion
 
-    
+        #region Loading
+        private bool loading = false;
+        public bool Loading
+        {
+            get { return loading; }
+            set { this.SetProperty(ref loading, value); }
+        }
+        #endregion
+
 
         public IndexPageViewModel(INavigationService navigationService)
         {
@@ -108,35 +88,24 @@ namespace ProconApp.ViewModels
             PageType = type;
             Visibility = Visibility.Visible;
 
-            IEnumerable<SummaryItem> list;
-            var count = 3;
             try
             {
                 switch (this.PageType)
-                {   
-                    // 取得した要素の中から、表示中のものに対してidが一致しないものだけ追加
+                {
                     case NavigateEnum.Notice:
                         Name = "お知らせ";
-                        list = (await Notice.getNotices(0, 3)).Where(l => !ItemList.Any(i => i.Id == l.Id)).ToList();
+                        ItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 3));
                         break;
                     case NavigateEnum.GameResult:
                         Name = "競技結果";
-                        list = (await GameResult.getGameResults(3)).Where(l => !ItemList.Any(i => i.Id == l.Id)).ToList();
+                        ItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
                         break;
                     case NavigateEnum.PhotoList:
                         Name = "会場フォト";
-                        list = (await Photo.getPhotos(1)).Where(l => !ItemList.Any(i => i.Id == l.Id)).ToList();
-                        count = 1;
+                        ItemList = new ObservableCollection<SummaryItem>(await Photo.getPhotos(1));
                         break;
                     default:
                         throw new ArgumentException();
-                }
-
-                foreach (var item in list)
-                {
-                    ItemList.Add(item);
-                    if(ItemList.Count > count)
-                        ItemList.Remove(ItemList.Last());
                 }
             }
             catch
@@ -152,16 +121,19 @@ namespace ProconApp.ViewModels
             this.PageType = (NavigateEnum)navigationParameter;
             this.Visibility = Visibility.Collapsed;
 
+            Loading = true;
+            
             var profile = NetworkInformation.GetInternetConnectionProfile();
             
             if (profile != null &&  profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
-                ItemUpdate();
+                await ItemUpdate();
             else
                 await new Windows.UI.Popups.MessageDialog("ネットワーク接続に失敗しました。接続状況を確認してください。").ShowAsync();
-            
+
+            Loading = false;
         }
 
-        private async void ItemUpdate()
+        private async Task ItemUpdate()
         {
             try
             {

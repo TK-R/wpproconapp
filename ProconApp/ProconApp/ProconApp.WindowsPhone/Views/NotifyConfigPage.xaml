@@ -3,12 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ProconApp.Views"
+    xmlns:hlp="using:ProconApp.Helper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.StoreApps"
     xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     mc:Ignorable="d"   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+ 
+    <prism:VisualStateAwarePage.Resources>
+        <hlp:VisiblityConverter x:Key="VisiblityConverter"/>
+    </prism:VisualStateAwarePage.Resources>
 
     <Grid>
         <TextBlock Text="通知設定" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,26,39,0" Height="37" VerticalAlignment="Top"/>
@@ -29,5 +34,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <ProgressBar Height="11" Margin="10,10,10,0" VerticalAlignment="Top" Visibility="{Binding Loading, Converter={StaticResource VisiblityConverter}}" IsIndeterminate="{Binding Loading}"/>
     </Grid>
 </prism:VisualStateAwarePage>

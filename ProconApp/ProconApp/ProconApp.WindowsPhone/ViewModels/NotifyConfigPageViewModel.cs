@@ -32,10 +32,21 @@ namespace ProconApp.ViewModels
 
         #endregion
 
+        #region Loading
+        private bool loading = false;
+        public bool Loading
+        {
+            get { return loading; }
+            set { this.SetProperty(ref loading, value); }
+        }
+        #endregion
+
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             // 画面遷移してきたときに呼ばれる
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
+
+            Loading = true;
 
             try
             {
@@ -65,6 +76,8 @@ namespace ProconApp.ViewModels
             {
                 Debug.WriteLine(ex.ToString());
             }
+
+            Loading = false;
         }
 
         public override async void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
