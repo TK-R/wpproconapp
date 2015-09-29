@@ -15,6 +15,8 @@ using System.Windows.Input;
 using Windows.UI.Xaml.Data;
 using System.Globalization;
 using Windows.UI.Text;
+using System.Net.NetworkInformation;
+using Windows.Networking.Connectivity;
 
 namespace ProconApp.ViewModels
 {
@@ -105,22 +107,41 @@ namespace ProconApp.ViewModels
         {
             PageType = type;
             Visibility = Visibility.Visible;
-            switch (this.PageType)
+
+            IEnumerable<SummaryItem> list;
+            var count = 3;
+            try
             {
-                case NavigateEnum.Notice:
-                    Name = "お知らせ";
-                    ItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 3));
-                    break;
-                case NavigateEnum.GameResult:
-                    Name = "競技結果";
-                    ItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResults(3));
-                    break;
-                case NavigateEnum.PhotoList:
-                    Name = "会場フォト";
-                    ItemList = new ObservableCollection<SummaryItem>(await Photo.getPhotos(1));
-                    break;
-                default:
-                    throw new ArgumentException();
+                switch (this.PageType)
+                {   
+                    // 取得した要素の中から、表示中のものに対してidが一致しないものだけ追加
+                    case NavigateEnum.Notice:
+                        Name = "お知らせ";
+                        list = (await Notice.getNotices(0, 3)).Where(l => !ItemList.Any(i => i.Id == l.Id)).ToList();
+                        break;
+                    case NavigateEnum.GameResult:
+                        Name = "競技結果";
+                        list = (await GameResult.getGameResults(3)).Where(l => !ItemList.Any(i => i.Id == l.Id)).ToList();
+                        break;
+                    case NavigateEnum.PhotoList:
+                        Name = "会場フォト";
+                        list = (await Photo.getPhotos(1)).Where(l => !ItemList.Any(i => i.Id == l.Id)).ToList();
+                        count = 1;
+                        break;
+                    default:
+                        throw new ArgumentException();
+                }
+
+                foreach (var item in list)
+                {
+                    ItemList.Add(item);
+                    if(ItemList.Count > count)
+                        ItemList.Remove(ItemList.Last());
+                }
+            }
+            catch
+            {
+                return;
             }
         }
 
@@ -130,22 +151,41 @@ namespace ProconApp.ViewModels
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
             this.PageType = (NavigateEnum)navigationParameter;
             this.Visibility = Visibility.Collapsed;
-            switch (this.PageType)
+
+            var profile = NetworkInformation.GetInternetConnectionProfile();
+            
+            if (profile != null &&  profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+                ItemUpdate();
+            else
+                await new Windows.UI.Popups.MessageDialog("ネットワーク接続に失敗しました。接続状況を確認してください。").ShowAsync();
+            
+        }
+
+        private async void ItemUpdate()
+        {
+            try
             {
-                case NavigateEnum.Notice:
-                    Name = "お知らせ";
-                    ItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 20));
-                    break;
-                case NavigateEnum.GameResult:
-                    Name = "競技結果";
-                    ItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResultItems(20));
-                    break;
-                case NavigateEnum.PhotoList:
-                    Name = "会場フォト";
-                    ItemList = new ObservableCollection<SummaryItem>(await Photo.getPhotos(20));
-                    break;
-                default:
-                    throw new ArgumentException();
+                switch (this.PageType)
+                {
+                    case NavigateEnum.Notice:
+                        Name = "お知らせ";
+                        ItemList = new ObservableCollection<SummaryItem>(await Notice.getNotices(0, 20));
+                        break;
+                    case NavigateEnum.GameResult:
+                        Name = "競技結果";
+                        ItemList = new ObservableCollection<SummaryItem>(await GameResult.getGameResultItems(20));
+                        break;
+                    case NavigateEnum.PhotoList:
+                        Name = "会場フォト";
+                        ItemList = new ObservableCollection<SummaryItem>(await Photo.getPhotos(20));
+                        break;
+                    default:
+                        throw new ArgumentException();
+                }
+            }
+            catch(NullReferenceException)
+            {
+                return;
             }
         }
 

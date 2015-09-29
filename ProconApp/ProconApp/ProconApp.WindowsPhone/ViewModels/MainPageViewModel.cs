@@ -15,6 +15,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Networking.Connectivity;
 
 namespace ProconApp.ViewModels
 {
@@ -116,19 +117,18 @@ namespace ProconApp.ViewModels
 
         #endregion
 
-        public async Task update()
+        public async void ItemUpdate()
         {
-            NoticeViewModel = new IndexPageViewModel(this.navigationService);
             NoticeViewModel.setIndex(NavigateEnum.Notice);
-
-            ResultViewModel = new IndexPageViewModel(this.navigationService);
             ResultViewModel.setIndex(NavigateEnum.GameResult);
-
-            PhotoViewModel = new IndexPageViewModel(this.navigationService);
             PhotoViewModel.setIndex(NavigateEnum.PhotoList);
-
-            SocialItemList = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
-
+            
+            // ツイートデータを取得
+            var social = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
+            
+            if (social != null)
+                SocialItemList = social;
+            
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
                 // GoogleAnalyticsに情報を送信（Home）
@@ -139,6 +139,17 @@ namespace ProconApp.ViewModels
                 // GoogleAnalyticsに情報を送信（Social）
                 AnalyticHelper.SendGAnalytics(AnalyticHelper.ViewParam.Social);
             }
+        }
+
+        public async Task Update()
+        {
+            // 失敗時にはネットワークエラーを表示
+            var profile = NetworkInformation.GetInternetConnectionProfile();
+
+            if (profile != null && profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+                ItemUpdate();
+            else
+                await new Windows.UI.Popups.MessageDialog("ネットワーク接続に失敗しました。接続状況を確認してください。").ShowAsync();
 
         }
 
@@ -149,11 +160,16 @@ namespace ProconApp.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
-
+            
             // URLを初期化
             var resLoader = ResourceLoader.GetForCurrentView("Resources");
             RouteUrl = resLoader.GetString("routeurl");
             ProgramUrl = resLoader.GetString("programurl");
+
+            NoticeViewModel = new IndexPageViewModel(this.navigationService);
+            ResultViewModel = new IndexPageViewModel(this.navigationService);
+            PhotoViewModel = new IndexPageViewModel(this.navigationService);
+
         }
 
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
@@ -162,14 +178,7 @@ namespace ProconApp.ViewModels
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
 
             // 競技/お知らせ/画像を取得
-            try
-            {
-               await update();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
+            await Update();
         }
 
         public override void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
@@ -199,7 +208,7 @@ namespace ProconApp.ViewModels
         /// </summary>
         public DelegateCommand RefreshCommand
         {
-            get { return this.refreshCommand ?? (this.refreshCommand = DelegateCommand.FromAsyncHandler(update)); }
+            get { return this.refreshCommand ?? (this.refreshCommand = DelegateCommand.FromAsyncHandler(Update)); }
         }
 
         #endregion

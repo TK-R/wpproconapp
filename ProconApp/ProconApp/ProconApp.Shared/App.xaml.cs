@@ -41,7 +41,13 @@ namespace ProconApp
             base.OnLaunched(args);
 
             // 通知ハブに登録
-            await InitNotificationsAsync();
+            try { 
+                await InitNotificationsAsync();
+            }catch
+            {
+                Debug.WriteLine("InitNotification Error");
+            }
+
             this.NavigationService.Navigate("Main", args.Arguments);
             
         }
