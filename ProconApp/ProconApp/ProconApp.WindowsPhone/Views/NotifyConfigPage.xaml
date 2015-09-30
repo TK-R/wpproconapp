@@ -16,7 +16,7 @@
     </prism:VisualStateAwarePage.Resources>
 
     <Grid>
-        <TextBlock Text="通知設定" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="32" TextWrapping="Wrap" Margin="19,26,39,0" Height="37" VerticalAlignment="Top"/>
+        <TextBlock Text="通知設定" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="22" TextWrapping="Wrap" Margin="19,26,39,0" Height="28" FontWeight="Bold" VerticalAlignment="Top"/>
         <ListView HorizontalAlignment="Left" 
                   Height="535" Margin="19,90,0,0" 
                   VerticalAlignment="Top" Width="371"

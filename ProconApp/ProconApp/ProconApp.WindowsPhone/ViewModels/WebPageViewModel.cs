@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 using ProconApp.Models;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace ProconApp.ViewModels
 
         #endregion
 
+        
         public override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             // 画面遷移してきたときに呼ばれる

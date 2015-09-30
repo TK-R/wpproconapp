@@ -27,17 +27,17 @@
 
     <Grid>
         <Pivot Title="プロコン2015" Margin="0,-1,0,1" SelectedIndex="{Binding Path=SelectedIndex,Mode=TwoWay}">
-            <PivotItem Header="ホーム" >
-                <ScrollViewer>
-                    <ListView ScrollViewer.VerticalScrollBarVisibility ="Hidden" Height="436">
+            <PivotItem Header="ホーム" Margin="10,0,10,-0.667" >
+                <ScrollViewer Margin="12,0,12,0"> 
+                    <ListView ScrollViewer.VerticalScrollBarVisibility ="Hidden">
                         <local:IndexPage DataContext="{Binding NoticeViewModel}" />
                         <local:IndexPage DataContext="{Binding ResultViewModel}" />
                         <local:IndexPage DataContext="{Binding PhotoViewModel}" />
                     </ListView>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem Header="ソーシャル" Margin="19,0,19,-0.667">
-                <ListView x:Name="ListView" Margin="0,0,-0.333,0.167" ScrollViewer.VerticalScrollBarVisibility ="Hidden"
+            <PivotItem Header="ソーシャル" Margin="20,0,20,-0.667">
+                <ListView x:Name="ListView" ScrollViewer.VerticalScrollBarVisibility ="Hidden"
                                     ItemsSource="{Binding SocialItemList}" HorizontalAlignment="Left" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -62,7 +62,7 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" Width="280">
+                                    <Grid Grid.Row="0" Width="300">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto" MinWidth="50"/>
