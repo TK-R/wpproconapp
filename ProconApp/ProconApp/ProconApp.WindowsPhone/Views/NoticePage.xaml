@@ -10,6 +10,7 @@
     mc:Ignorable="d"   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid >
-        <WebView local:WebExtension.HTML="{Binding PageHTML}"/>
+        <ProgressBar x:Name="progressBar" Height="15" VerticalAlignment="Top"  IsIndeterminate="True"/>
+        <WebView local:WebExtension.HTML="{Binding PageHTML}"  NavigationCompleted="WebView_NavigationCompleted" NavigationStarting="WebView_NavigationStarting"  Margin="0,15,0,0" />
     </Grid>
 </prism:VisualStateAwarePage>

@@ -12,6 +12,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
         <ProgressBar x:Name="progressBar" Height="15" VerticalAlignment="Top"  IsIndeterminate="True"/>
-        <WebView Source="{Binding PageURL}"  NavigationCompleted="WebView_NavigationCompleted" NavigationStarting="WebView_NavigationStarting"  Height="630" VerticalAlignment="Top"  Margin="0,15,0,0" />
+        <WebView Source="{Binding PageURL}"  NavigationCompleted="WebView_NavigationCompleted" NavigationStarting="WebView_NavigationStarting"  Margin="0,15,0,0" />
     </Grid>
 </prism:VisualStateAwarePage>

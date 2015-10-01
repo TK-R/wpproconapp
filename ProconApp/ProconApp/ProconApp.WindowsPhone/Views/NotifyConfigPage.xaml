@@ -10,26 +10,31 @@
     xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     mc:Ignorable="d"   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
- 
+
     <prism:VisualStateAwarePage.Resources>
         <hlp:VisiblityConverter x:Key="VisiblityConverter"/>
     </prism:VisualStateAwarePage.Resources>
 
-    <Grid>
+    <Grid Margin="0,0.333,0,-0.333">
         <TextBlock Text="通知設定" Style="{ThemeResource HeaderTextBlockStyle}"  FontSize="22" TextWrapping="Wrap" Margin="19,26,39,0" Height="28" FontWeight="Bold" VerticalAlignment="Top"/>
-        <ListView HorizontalAlignment="Left" 
-                  Height="535" Margin="19,90,0,0" 
-                  VerticalAlignment="Top" Width="371"
-                  ItemsSource="{Binding NotifyConfigItemList}">
+        <ListView Margin="20,90,20,15" ItemsSource="{Binding NotifyConfigItemList}" ScrollViewer.VerticalScrollBarVisibility ="Hidden">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="40" Margin="0" >
+                    <Grid Height="40">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" FontSize="24" Text="{Binding SchoolName}"/>
-                        <ToggleSwitch Grid.Column="1"  IsOn="{Binding NotifyFlag,Mode=TwoWay}"/>
+                        <Grid HorizontalAlignment="Right" Grid.Column="2" >
+                            <ToggleSwitch  IsOn="{Binding NotifyFlag,Mode=TwoWay}" />
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

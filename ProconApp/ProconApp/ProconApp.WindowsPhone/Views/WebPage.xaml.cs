@@ -33,7 +33,7 @@ namespace ProconApp.Views
         private void WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
             progressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-progressBar.IsIndeterminate = false;
+            progressBar.IsIndeterminate = false;
         }
 
         private void WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
