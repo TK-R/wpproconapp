@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="101646E78A6D6.ProconAppWP" Publisher="CN=AEAC0DF0-77A9-42FE-B620-2571AC3CA458" Version="1.3.0.0" />
+  <Identity Name="101646E78A6D6.ProconAppWP" Publisher="CN=AEAC0DF0-77A9-42FE-B620-2571AC3CA458" Version="1.5.0.0" />
   <mp:PhoneIdentity PhoneProductId="d85feaa2-f363-4ba2-9eaa-0dfc434e3ee8" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>高専プロコン公式アプリ</DisplayName>

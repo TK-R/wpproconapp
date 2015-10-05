@@ -19,7 +19,7 @@ using Windows.Networking.Connectivity;
 using Windows.UI.Xaml.Data;
 
 namespace ProconApp.ViewModels
-{        
+{
 
     public class MainPageViewModel : ViewModel
     {
@@ -39,6 +39,12 @@ namespace ProconApp.ViewModels
         /// WebPageに表示する当日プログラムのURL
         /// </summary>
         static string ProgramUrl;
+
+        /// <summary>
+        /// WebPageに表示する「このアプリについて」のURL
+        /// </summary>
+        static string InfoUrl;
+
         #endregion
 
         #region NoticeViewModel
@@ -66,7 +72,7 @@ namespace ProconApp.ViewModels
             get { return this.resultViewModel; }
             set { this.SetProperty(ref resultViewModel, value); }
         }
-        
+
         #endregion
 
         #region SocialItemList
@@ -94,7 +100,7 @@ namespace ProconApp.ViewModels
             get { return photoViewModel; }
             set { this.SetProperty(ref photoViewModel, value); }
         }
-        
+
         #endregion
 
         #region SelectedIndex
@@ -122,8 +128,8 @@ namespace ProconApp.ViewModels
         private bool loading = false;
         public bool Loading
         {
-            get {return loading;}
-            set{this.SetProperty(ref loading, value);}
+            get { return loading; }
+            set { this.SetProperty(ref loading, value); }
         }
         #endregion
 
@@ -132,13 +138,13 @@ namespace ProconApp.ViewModels
             NoticeViewModel.setIndex(NavigateEnum.Notice);
             ResultViewModel.setIndex(NavigateEnum.GameResult);
             PhotoViewModel.setIndex(NavigateEnum.PhotoList);
-            
+
             // ツイートデータを取得
             var social = new ObservableCollection<Social.SocialItem>(await Social.getSocialItems(30));
-            
+
             if (social != null)
                 SocialItemList = social;
-            
+
             if (SelectedIndex == (int)MainPageEnum.Home)
             {
                 // GoogleAnalyticsに情報を送信（Home）
@@ -166,7 +172,7 @@ namespace ProconApp.ViewModels
             {
                 await new Windows.UI.Popups.MessageDialog("ネットワーク接続に失敗しました。接続状況を確認してください。").ShowAsync();
             }
-                
+
         }
 
         /// <summary>
@@ -176,11 +182,12 @@ namespace ProconApp.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
-            
+
             // URLを初期化
             var resLoader = ResourceLoader.GetForCurrentView("Resources");
             RouteUrl = resLoader.GetString("routeurl");
             ProgramUrl = resLoader.GetString("programurl");
+            InfoUrl = resLoader.GetString("infourl");
 
             NoticeViewModel = new IndexPageViewModel(this.navigationService);
             ResultViewModel = new IndexPageViewModel(this.navigationService);
@@ -244,7 +251,7 @@ namespace ProconApp.ViewModels
 
         protected void Navigate(Social.SocialItem item)
         {
-            var url = "https://twitter.com/" + item.ScreenName.Remove(0,1) + "/status/" + item.TweeetID;
+            var url = "https://twitter.com/" + item.ScreenName.Remove(0, 1) + "/status/" + item.TweeetID;
             this.navigationService.Navigate("Web", url);
         }
 
@@ -266,18 +273,23 @@ namespace ProconApp.ViewModels
                 case NavigateEnum.Program:
                     this.navigationService.Navigate("Web", ProgramUrl);
                     break;
+                case NavigateEnum.Info:
+                    this.navigationService.Navigate("Web", InfoUrl);
+                    break;
+
                 default:
                     break;
             }
         }
-
     }
+
     public enum NavigateEnum
     {
         Setting,
         Notice,
         GameResult,
         PhotoList,
+        Info,
         Map,
         Program
     }

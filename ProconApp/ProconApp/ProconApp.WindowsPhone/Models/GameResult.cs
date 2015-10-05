@@ -74,7 +74,8 @@ namespace ProconApp.Models
                                 Advance = p.advance
                             }).ToList())
                     }
-                );
+                ).ToList();
+            resultItem.Insert(0, new GameReultItem { Title = "次の試合に進出するチームを太字で表示します。" });
             return resultItem;
         }
      }

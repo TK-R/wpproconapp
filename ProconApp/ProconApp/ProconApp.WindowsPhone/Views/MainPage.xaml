@@ -17,20 +17,22 @@
     <prism:VisualStateAwarePage.Resources>
         <hlp:VisiblityConverter x:Key="VisiblityConverter"/>
     </prism:VisualStateAwarePage.Resources>
-        <prism:VisualStateAwarePage.BottomAppBar>
+    <prism:VisualStateAwarePage.BottomAppBar>
         <CommandBar Height="17">
             <AppBarButton Icon="Map" Command="{Binding NavigateCommand}" CommandParameter="Map" Label="アクセス"/>
             <AppBarButton Icon="Document" Command="{Binding NavigateCommand}" CommandParameter="Program" Label="プログラム"/>
             <AppBarButton Icon="Refresh" Command="{Binding RefreshCommand}" Label="更新"/>
             <AppBarButton Icon="Setting" Command="{Binding NavigateCommand}" CommandParameter="Setting" Label="通知設定"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="このアプリについて" Command="{Binding NavigateCommand}" CommandParameter="Info" />
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </prism:VisualStateAwarePage.BottomAppBar>
-
     <Grid>
         <Pivot Title="プロコン2015" Margin="0,-1,0,1" SelectedIndex="{Binding Path=SelectedIndex,Mode=TwoWay}">
             <PivotItem Header="ホーム" Margin="10,0,10,-0.667" >
                 <ScrollViewer Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility ="Hidden"> 
-                    <ListView ScrollViewer.VerticalScrollBarVisibility ="Hidden" HorizontalAlignment="Stretch">
+                    <ListView ScrollViewer.VerticalScrollBarVisibility ="Hidden"  HorizontalAlignment="Stretch">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment"  Value="Stretch" />

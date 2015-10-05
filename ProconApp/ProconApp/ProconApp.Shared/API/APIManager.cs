@@ -272,19 +272,19 @@ namespace ProconAPI
         /// <returns>結果</returns>
         public static async Task<string> PushDeviceSet(string uri)
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // シリアライズしたオブジェクトをバイト形式のcontentに変換
-            var jsonText = JsonConvert.SerializeObject(
-                new DeviceTokenObject { device_type = "wp", device_token = uri});
-           
-            var content = new ByteArrayContent(Encoding.UTF8.GetBytes(jsonText));
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
             try
             {
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("X-User-Token", UserToken);
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // シリアライズしたオブジェクトをバイト形式のcontentに変換
+                var jsonText = JsonConvert.SerializeObject(
+                    new DeviceTokenObject { device_type = "wp", device_token = uri });
+
+                var content = new ByteArrayContent(Encoding.UTF8.GetBytes(jsonText));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
                 var res = await httpClient.PutAsync(new Uri(APIDomain + "/user/me/push_token"), content);
                 return await res.Content.ReadAsStringAsync();
             }
