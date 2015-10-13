@@ -60,8 +60,8 @@ namespace ProconApp.Models
                     {
                         Id = gr.id,
                         Title = gr.title,
-                        Date = "開始: " + DateTimeHelper.FromUnixTime(gr.started_at).ToString("HH:mm") + " - " +
-                               (gr.status == 1 ? "[試合中]" : "終了: " + DateTimeHelper.FromUnixTime(gr.finished_at).ToString("HH:mm")),
+                        Date = "開始: " + DateTimeHelper.JstTime(DateTimeHelper.FromUnixTime(gr.started_at)).ToString("HH:mm") + " - " +
+                               (gr.status == 1 ? "[試合中]" : "終了: " +  DateTimeHelper.JstTime(DateTimeHelper.FromUnixTime(gr.finished_at)).ToString("HH:mm")),
                         ResultList = new ObservableCollection<Result>(gr.result
                         .OrderBy(p => p.rank)
                         .Select(p =>

@@ -56,6 +56,11 @@ namespace ProconApp
             return UnixEpoch.AddSeconds(unixTime);
         }
 
+        public static DateTime JstTime(DateTime utcTime)
+        {
+            return TimeZoneInfo.ConvertTime(utcTime, TimeZoneInfo.Local);
+        }
+
         public static DateTime FromTweetTime(string txt)
         {
             var format = "ddd MMM dd HH:mm:ss zzz yyyy";
